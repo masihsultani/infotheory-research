@@ -2,18 +2,18 @@ import csv
 import sys
 from ast import literal_eval
 from collections import defaultdict
-from typing import Set
-
 import numpy as np
 import pandas as pd
 
-from helper import get_context, file_locations, get_gram_count
+from helper import get_context, file_locations, get_gram_count, gram_conv
 
 
-def compute_entropy(infile, corpus, gram, stop_words=None):
+
+
+def compute_entropy(infolder, corpus, gram, stop_words=None):
     """
 
-    :param infile: str
+    :param infolder: str
         location of the ngrams
     :param corpus: str
         the corpus we are calculating entropy for
@@ -27,25 +27,16 @@ def compute_entropy(infile, corpus, gram, stop_words=None):
     short_forms = set(list(df.short.values))
     long_forms = set(list(df.long.values))
     prime_prob = defaultdict(lambda: defaultdict(float))
-    short_set = set()
-    long_set =set()
+    long_set = get_context(long_forms, gram, infolder, corpus, stop_words)
+    short_set = get_context(short_forms, gram, infolder, corpus, stop_words)
 
-    context_files = file_locations(gram, infile, corpus=corpus,stop_words=stop_words)
-    for file in context_files:
-        long_contexts = get_context(long_forms, file, corpus)
-        short_contexts = get_context(short_forms, file, corpus)
-
-        long_set.update(long_contexts)
-        short_set.update(short_contexts)
-        print(len(long_set),len(short_set))
-        sys.stdout.flush()
-
+    gram_files = file_locations(gram, infolder, corpus=corpus, stop_words=stop_words)
     context_set = short_set | long_set
-    context_count = get_gram_count(gram_conv[gram],infile,corpus,stop_words)
+    context_count = get_gram_count(gram_conv[gram], infolder, corpus, stop_words)
 
-    for file in context_files:
+    for file in gram_files:
         with open(file, 'r', encoding="utf-8") as file_2:
-            if corpus=="google":
+            if corpus == "google":
                 reader = csv.reader(file_2, dialect="excel-tab", quoting=csv.QUOTE_NONE)
             else:
                 reader = csv.reader(file_2)
@@ -68,14 +59,13 @@ def entropy_set_calc(context_set, probs):
     entropy_dict = defaultdict(float)
 
     for context in context_set:
-        entropy =0
+        entropy = 0
         for word in probs[context]:
             entropy += probs[context][word] * (np.log2(1 / (probs[context][word])))
 
         entropy_dict[context] = entropy
 
     return entropy_dict
-
 
 # if __name__ == "__main__":
 #     corpus = sys.argv[1]  # native or nonnative or google

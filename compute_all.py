@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from ngram_entropy import compute_entropy
 from ngram_cosine import compute_cosine
-from ngram_surprisal import compute_surpisal
+from ngram_surprisal import compute_surprisal
 from helper import get_gram_count
 import gensim
 

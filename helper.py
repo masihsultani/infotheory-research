@@ -10,37 +10,44 @@ from collections import defaultdict
 from ast import literal_eval
 import sys
 
-def get_context(words, infile, corpus):
+gram_conv = {"trigram": "bigram", "bigram": "unigram"}
+
+
+def get_context(words, gram, infolder, corpus, stop_words):
     """
     Helper function to get contexts for a set of words
+    :param gram:
+    :param infolder:
+    :param stop_words:
     :param corpus: str
     :param words: set
-    :param infile: str
     :return:
     """
     contexts = set()
-    with open(infile, mode='r', encoding='utf-8') as (inputfile):
-        if corpus == 'google':
-            csvfile = csv.reader(inputfile, dialect='excel-tab', quoting=(csv.QUOTE_NONE))
-        else:
-            csvfile = csv.reader(inputfile)
-        for row in csvfile:
-            templst = row[0].split(' ')
-            if templst[(-1)] in words:
-                contexts.add(' '.join(word for word in templst[:-1]))
+    all_files = file_locations(gram, infolder, corpus, stop_words)
+    for infile in all_files:
+        with open(infile, mode='r', encoding='utf-8') as (inputfile):
+            if corpus == 'google':
+                csvfile = csv.reader(inputfile, dialect='excel-tab', quoting=csv.QUOTE_NONE)
+            else:
+                csvfile = csv.reader(inputfile)
+            for row in csvfile:
+                templst = row[0].split(' ')
+                if templst[(-1)] in words:
+                    contexts.add(' '.join(word for word in templst[:-1]))
 
-        inputfile.close()
+            inputfile.close()
     return contexts
 
 
-def file_locations(gram, infile, corpus, stop_words=None):
+def file_locations(gram, infolder, corpus, stop_words=None):
     """
 
     :param stop_words:
     :param corpus:
     :param gram: str
     bigram or trigram
-    :param infile: str
+    :param infolder: str
     base location of files
     :return: list
     list of string for file locations
@@ -48,52 +55,52 @@ def file_locations(gram, infile, corpus, stop_words=None):
     lst = []
     if corpus == 'google':
         if gram == 'bigram':
-            infile_2 = f"{infile}/dvd1/data/2gms/2gm.idx"
+            infile_2 = f"{infolder}/dvd1/data/2gms/2gm.idx"
             with open(infile_2, encoding='utf-8') as (file_1):
                 csv_file = csv.reader(file_1, delimiter='\t')
                 for row in csv_file:
                     string = row[0].strip('\\.gz')
-                    file_loc = f"{infile}/dvd1/data/2gms/{string}"
+                    file_loc = f"{infolder}/dvd1/data/2gms/{string}"
                     lst.append(file_loc)
 
         elif gram == 'trigram':
             count = 0
-            infile_1 = f"{infile}/dvd1/data/3gms/3gm.idx"
+            infile_1 = f"{infolder}/dvd1/data/3gms/3gm.idx"
             with open(infile_1, encoding='utf-8') as (file_1):
                 csv_file = csv.reader(file_1, delimiter='\t')
                 for row in csv_file:
                     if count < 46:
                         string = row[0].strip('\\.gz')
-                        file_loc = f"{infile}/dvd1/data/3gms/{string}"
+                        file_loc = f"{infolder}/dvd1/data/3gms/{string}"
                         lst.append(file_loc)
                         count += 1
                     else:
                         string = row[0].strip('\\.gz')
-                        file_loc = f"{infile}/dvd2/data/3gms/{string}"
+                        file_loc = f"{infolder}/dvd2/data/3gms/{string}"
                         lst.append(file_loc)
 
         elif gram == 'unigram':
-            lst.append(f"{infile}/dvd1/data/1gms/vocab")
+            lst.append(f"{infolder}/dvd1/data/1gms/vocab")
     elif gram == 'bigram' or gram == 'trigram':
-        file_in = f"{infile}{gram}_{corpus}_{stop_words}.csv"
+        file_in = f"{infolder}{gram}_{corpus}_{stop_words}.csv"
         lst.append(file_in)
     elif gram == 'unigram':
-        file_in = f"{infile}unigram_{corpus}.csv"
+        file_in = f"{infolder}unigram_{corpus}.csv"
         lst.append(file_in)
     return lst
 
 
-def get_gram_count(gram_size, infile, corpus, stop_words):
+def get_gram_count(gram_size, infolder, corpus, stop_words):
     """
 
     :param gram_size: str
-    :param infile: str
+    :param infolder: str
     :param corpus: str
     :param stop_words: str
     :return: dictionary
     """
     gram_count = defaultdict(int)
-    all_gram_files = file_locations(gram_size, infile, corpus=corpus, stop_words=stop_words)
+    all_gram_files = file_locations(gram_size, infolder, corpus=corpus, stop_words=stop_words)
     for file_ in all_gram_files:
         with open(file_, 'r', encoding='utf-8') as (temp_file):
             if corpus == 'google':
@@ -111,19 +118,19 @@ def get_gram_count(gram_size, infile, corpus, stop_words):
     return gram_count
 
 
-def get_ngram_probs(gram_size, context_count, words, infile, corpus, stop_words):
+def get_ngram_probs(gram_size, context_count, words, infolder, corpus, stop_words):
     """
 
     :param gram_size:
     :param context_count:
     :param words:
-    :param infile:
+    :param infolder:
     :param corpus:
     :param stop_words:
     :return:
     """
-    prime_probs = defaultdict(lambda : defaultdict(float))
-    all_files = file_locations(gram_size, infile, corpus=corpus, stop_words=stop_words)
+    prime_probs = defaultdict(lambda: defaultdict(float))
+    all_files = file_locations(gram_size, infolder, corpus=corpus, stop_words=stop_words)
     for file in all_files:
         with open(file, 'r', encoding='utf-8') as (file_in):
             if corpus == 'google':

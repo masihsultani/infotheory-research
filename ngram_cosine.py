@@ -1,17 +1,14 @@
-import csv
-import sys
-from ast import literal_eval
 from collections import defaultdict
-from typing import Set
-import numpy as np
+
 import pandas as pd
-from helper import get_context, file_locations
+
+from helper import get_context
 
 
-def compute_cosine(infile, corpus, gram, model, stop_words=None):
+def compute_cosine(infolder, corpus, gram, model, stop_words=None):
     """
 
-    :param infile:
+    :param infolder:
     :param corpus:
     :param gram:
     :param model:
@@ -22,14 +19,9 @@ def compute_cosine(infile, corpus, gram, model, stop_words=None):
     df = pd.read_csv("all_forms.csv", encoding="utf-8")  # load csv with long and short form words
     short_forms = set(list(df.short.values))
     long_forms = set(list(df.long.values))
-    short_set = set()
-    long_set = set()
 
-    all_files = file_locations(gram, infile,corpus,stop_words)
-    for file in all_files:
-        x = get_context(short_forms,long_forms, file,corpus)
-        long_set.update(x[1])
-        short_set.update(x[0])
+    long_set =  get_context(long_forms,gram,infolder,corpus,stop_words)
+    short_set = get_context(short_forms,gram,infolder,corpus,stop_words)
     all_set = long_set | short_set
     all_cosine_dict = get_cosines(all_set, model)
 

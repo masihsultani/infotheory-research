@@ -19,6 +19,7 @@ def compute_surprisal(infolder, corpus, ngrams, stop_word):
     surprisal_lst = []
     context_count = get_gram_count(gram_conv[ngrams], infolder,corpus, stop_word)
     probs = get_ngram_probs(ngrams,context_count,all_forms,infolder,corpus,stop_word)
+    del context_count
     for word in probs:
         for context in probs[word]:
             surprisal = np.log2(1/probs[word][context])

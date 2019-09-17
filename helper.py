@@ -13,7 +13,7 @@ import sys
 gram_conv = {"trigram": "bigram", "bigram": "unigram"}
 
 
-def get_context(words, gram, infolder, corpus, stop_words):
+def get_context(words, gram, infolder, corpus, stop_words, keep_words=False):
     """
     Helper function to get contexts for a set of words
     :param gram:
@@ -34,7 +34,10 @@ def get_context(words, gram, infolder, corpus, stop_words):
             for row in csvfile:
                 templst = row[0].split(' ')
                 if templst[(-1)] in words:
-                    contexts.add(' '.join(word for word in templst[:-1]))
+                    if keep_words:
+                        contexts.add(row[0])
+                    else:
+                        contexts.add(' '.join(word for word in templst[:-1]))
 
             inputfile.close()
     return contexts

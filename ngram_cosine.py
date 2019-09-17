@@ -20,8 +20,8 @@ def compute_cosine(infolder, corpus, gram, model, stop_words=None):
     short_forms = set(list(df.short.values))
     long_forms = set(list(df.long.values))
 
-    long_set =  get_context(long_forms,gram,infolder,corpus,stop_words)
-    short_set = get_context(short_forms,gram,infolder,corpus,stop_words)
+    long_set =  get_context(long_forms,gram,infolder,corpus,stop_words,True)
+    short_set = get_context(short_forms,gram,infolder,corpus,stop_words,True)
     all_set = long_set | short_set
     all_cosine_dict = get_cosines(all_set, model)
 

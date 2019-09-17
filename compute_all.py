@@ -25,8 +25,8 @@ if __name__ == "__main__":
         glove2word2vec(glove_file, tmp_file)
         model = gensim.models.KeyedVectors.load_word2vec_format(tmp_file)
     else:
-        model = gensim.models.Word2Vec.load_word2vec_format('/hal9000/masih/models/GoogleNews-vectors-negative300.bin',
-                                                            binary=True)
+        model = gensim.models.KeyedVectors.load_word2vec_format('/hal9000/masih/models/GoogleNews-vectors-negative300.bin',
+                                                                                                  binary=True)
 
     if corpus == 'google':
         filein = f"/w/nobackup/131/web1t-5gram-v1"

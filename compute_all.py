@@ -1,11 +1,5 @@
 import csv
 import sys
-from ast import literal_eval
-from collections import defaultdict
-from typing import Set
-
-import numpy as np
-import pandas as pd
 from ngram_entropy import compute_entropy
 from ngram_cosine import compute_cosine
 from ngram_surprisal import compute_surprisal
@@ -15,12 +9,12 @@ import gensim
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath, get_tmpfile
 
-from gensim.models import KeyedVectors
+
 
 
 
 if __name__ == "__main__":
-    corpus = sys.argv[1]  # native or nonnative or google
+    corpus = sys.argv[1]  # native or nonnative or google or wiki
     stop_word = sys.argv[2]
     ngrams =  sys.argv[3]
     m = sys.argv[4]
@@ -42,7 +36,7 @@ if __name__ == "__main__":
 
     entropy_dict = compute_entropy(filein, corpus,ngrams,stop_word)
     cosine_dict = compute_cosine(filein, corpus, ngrams, model,stop_word)
-    surprisal_list = compute_surpisal(filein, corpus, ngrams,stop_word)
+    surprisal_list = compute_surprisal(filein, corpus, ngrams,stop_word)
     unigram_count = get_gram_count("unigram",filein,corpus,stop_word)
     sense_dict = {'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 'math': 7, 'limo': 8,
                  'ref': 15, 'roach': 16, 'fridge': 17, 'exam': 18, 'chemo': 19, 'sax': 20, 'frat': 21, 'memo': 22,
@@ -56,7 +50,7 @@ if __name__ == "__main__":
     if corpus == "google":
         out_file = f"/hal9000/masih/surprisal/all_data/{corpus}_{ngrams}.csv"
     else:
-        out_file = f"/hal9000/masih/surprisal/all_data/{corpus}_{ngrams}_{str(stop_words)}.csv"
+        out_file = f"/hal9000/masih/surprisal/all_data/{corpus}_{ngrams}_{str(stop_word)}.csv"
 
     with open(out_file, 'w') as out_put:
         csvout = csv.writer(out_put)

@@ -11,11 +11,11 @@ import numpy as np
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import get_tmpfile
 
-if __name__ == "__main__":
-    corpus = sys.argv[1]  # native or nonnative or google or wiki
-    stop_word = sys.argv[3]
-    ngrams = sys.argv[2]
-    m = sys.argv[4]
+def main(argv):
+    corpus = argv[1]  # native or nonnative or google or wiki
+    stop_word = argv[3]
+    ngrams = argv[2]
+    m = argv[4]
     if m == "glove":
         glove_file = '/hal9000/masih/models/glove.6B.300d.txt'
         tmp_file = get_tmpfile("test_word2vec.txt")
@@ -66,3 +66,7 @@ if __name__ == "__main__":
                              cosine]
                 csvout.writerow(final_row)
     out_put.close()
+
+
+if __name__ == "__main__":
+    main(sys.argv)

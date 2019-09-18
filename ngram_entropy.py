@@ -8,13 +8,10 @@ import pandas as pd
 from helper import get_context, file_locations, get_gram_count, gram_conv
 
 
-
-
-def compute_entropy(infolder, corpus, gram, stop_words=None):
+def compute_entropy(corpus, gram, stop_words=None):
     """
 
-    :param infolder: str
-        location of the ngrams
+    :param gram:
     :param corpus: str
         the corpus we are calculating entropy for
     :param stop_words: str
@@ -27,12 +24,12 @@ def compute_entropy(infolder, corpus, gram, stop_words=None):
     short_forms = set(list(df.short.values))
     long_forms = set(list(df.long.values))
     prime_prob = defaultdict(lambda: defaultdict(float))
-    long_set = get_context(long_forms, gram, infolder, corpus, stop_words)
-    short_set = get_context(short_forms, gram, infolder, corpus, stop_words)
+    long_set = get_context(long_forms, gram,  corpus, stop_words)
+    short_set = get_context(short_forms, gram, corpus, stop_words)
 
-    gram_files = file_locations(gram, infolder, corpus=corpus, stop_words=stop_words)
+    gram_files = file_locations(gram, corpus=corpus, stop_words=stop_words)
     context_set = short_set | long_set
-    context_count = get_gram_count(gram_conv[gram], infolder, corpus, stop_words)
+    context_count = get_gram_count(gram_conv[gram], corpus, stop_words)
 
     for file in gram_files:
         with open(file, 'r', encoding="utf-8") as file_2:
@@ -41,11 +38,11 @@ def compute_entropy(infolder, corpus, gram, stop_words=None):
             else:
                 reader = csv.reader(file_2)
             for row in reader:
-                temp_gram = row[0].split()
+                temp_gram = row[0].lower().split()
                 temp_context = ' '.join(word for word in temp_gram[:-1])
                 if temp_context in context_set:
                     try:
-                        prime_prob[temp_context][temp_gram[-1]] = literal_eval(row[1]) / context_count[temp_context]
+                        prime_prob[temp_context][temp_gram[-1]] += (literal_eval(row[1]) / context_count[temp_context])
                     except ZeroDivisionError:
                         print(temp_context, " ZeroDivision Error")
                     sys.stdout.flush()

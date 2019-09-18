@@ -27,18 +27,13 @@ if __name__ == "__main__":
             '/hal9000/masih/models/GoogleNews-vectors-negative300.bin',
             binary=True)
 
-    if corpus == 'google':
-        filein = f"/w/nobackup/131/web1t-5gram-v1"
-        stop_word = None
-    else:
-        filein = f"/ais/hal9000/masih/surprisal/{corpus}/"
     df = pd.read_csv("all_forms.csv", encoding="utf-8")  # load csv with long and short form words
     short_forms = set(list(df.short.values))
 
-    entropy_dict = compute_entropy(filein, corpus, ngrams, stop_word)
+    entropy_dict = compute_entropy( corpus, ngrams, stop_word)
     # cosine_dict = compute_cosine(filein, corpus, ngrams, model, stop_word)
-    surprisal_dict = compute_surprisal(filein, corpus, ngrams, stop_word)
-    unigram_count = get_gram_count("unigram", filein, corpus, stop_word)
+    surprisal_dict = compute_surprisal(corpus, ngrams, stop_word)
+    unigram_count = get_gram_count("unigram", corpus, stop_word)
     sense_dict = {'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 'math': 7, 'limo': 8,
                   'ref': 15, 'roach': 16, 'fridge': 17, 'exam': 18, 'chemo': 19, 'sax': 20, 'frat': 21, 'memo': 22,
                   'dorm': 9, 'kilo': 10, 'rhino': 11, 'undergrad': 12, 'hippo': 13, 'chimp': 14,

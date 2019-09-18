@@ -5,10 +5,9 @@ import pandas as pd
 from helper import get_context
 
 
-def compute_cosine(infolder, corpus, gram, model, stop_words=None):
+def compute_cosine(corpus, gram, model, stop_words=None):
     """
 
-    :param infolder:
     :param corpus:
     :param gram:
     :param model:
@@ -20,8 +19,8 @@ def compute_cosine(infolder, corpus, gram, model, stop_words=None):
     short_forms = set(list(df.short.values))
     long_forms = set(list(df.long.values))
 
-    long_set =  get_context(long_forms,gram,infolder,corpus,stop_words,True)
-    short_set = get_context(short_forms,gram,infolder,corpus,stop_words,True)
+    long_set = get_context(long_forms, gram, corpus, stop_words, True)
+    short_set = get_context(short_forms, gram, corpus, stop_words, True)
     all_set = long_set | short_set
     all_cosine_dict = get_cosines(all_set, model)
 
@@ -62,7 +61,7 @@ def cosine_sim(x, model):
         mean_dist = mean_dist / (len(words) - 1)
 
     except ZeroDivisionError:
-        mean_dist =0
+        mean_dist = 0
     return mean_dist
 
 # if __name__ == "__main__":
@@ -76,4 +75,3 @@ def cosine_sim(x, model):
 #         for x in stopword:
 #             filein = f"/ais/hal9000/masih/surprisal/{data}/"
 #             main_prog(filein, data,x)
-

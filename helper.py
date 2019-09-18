@@ -13,18 +13,18 @@ import sys
 gram_conv = {"trigram": "bigram", "bigram": "unigram"}
 
 
-def get_context(words, gram, infolder, corpus, stop_words, keep_words=False):
+def get_context(words, gram, corpus, stop_words, keep_words=False):
     """
     Helper function to get contexts for a set of words
+    :param keep_words:
     :param gram:
-    :param infolder:
     :param stop_words:
     :param corpus: str
     :param words: set
     :return:
     """
     contexts = set()
-    all_files = file_locations(gram, infolder, corpus, stop_words)
+    all_files = file_locations(gram, corpus, stop_words)
     for infile in all_files:
         with open(infile, mode='r', encoding='utf-8') as (inputfile):
             if corpus == 'google':
@@ -32,10 +32,10 @@ def get_context(words, gram, infolder, corpus, stop_words, keep_words=False):
             else:
                 csvfile = csv.reader(inputfile)
             for row in csvfile:
-                templst = row[0].split(' ')
+                templst = row[0].lower().split(' ')
                 if templst[(-1)] in words:
                     if keep_words:
-                        contexts.add(row[0])
+                        contexts.add(row[0].lower())
                     else:
                         contexts.add(' '.join(word for word in templst[:-1]))
 
@@ -43,20 +43,21 @@ def get_context(words, gram, infolder, corpus, stop_words, keep_words=False):
     return contexts
 
 
-def file_locations(gram, infolder, corpus, stop_words=None):
+def file_locations(gram, corpus, stop_words=None):
     """
 
     :param stop_words:
     :param corpus:
     :param gram: str
     bigram or trigram
-    :param infolder: str
-    base location of files
     :return: list
     list of string for file locations
     """
+
+    infolder = f"/ais/hal9000/masih/surprisal/{corpus}/"
     lst = []
     if corpus == 'google':
+        infolder = "/w/nobackup/131/web1t-5gram-v1"
         if gram == 'bigram':
             infile_2 = f"{infolder}/dvd1/data/2gms/2gm.idx"
             with open(infile_2, encoding='utf-8') as (file_1):
@@ -93,21 +94,20 @@ def file_locations(gram, infolder, corpus, stop_words=None):
     return lst
 
 
-def get_gram_count(gram_size, infolder, corpus, stop_words):
+def get_gram_count(gram_size, corpus, stop_words):
     """
 
     :param gram_size: str
-    :param infolder: str
     :param corpus: str
     :param stop_words: str
     :return: dictionary
     """
     gram_count = defaultdict(int)
-    all_gram_files = file_locations(gram_size, infolder, corpus=corpus, stop_words=stop_words)
+    all_gram_files = file_locations(gram_size, corpus=corpus, stop_words=stop_words)
     for file_ in all_gram_files:
         with open(file_, 'r', encoding='utf-8') as (temp_file):
             if corpus == 'google':
-                csv_reader = csv.reader(temp_file, dialect='excel-tab', quoting=(csv.QUOTE_NONE))
+                csv_reader = csv.reader(temp_file, dialect='excel-tab', quoting=csv.QUOTE_NONE)
                 for row in csv_reader:
                     gram_count[row[0].lower()] += literal_eval(row[1])
 
@@ -121,23 +121,22 @@ def get_gram_count(gram_size, infolder, corpus, stop_words):
     return gram_count
 
 
-def get_ngram_probs(gram_size, context_count, words, infolder, corpus, stop_words):
+def get_ngram_probs(gram_size, context_count, words, corpus, stop_words):
     """
 
     :param gram_size:
     :param context_count:
     :param words:
-    :param infolder:
     :param corpus:
     :param stop_words:
     :return:
     """
     prime_probs = defaultdict(lambda: defaultdict(float))
-    all_files = file_locations(gram_size, infolder, corpus=corpus, stop_words=stop_words)
+    all_files = file_locations(gram_size, corpus=corpus, stop_words=stop_words)
     for file in all_files:
         with open(file, 'r', encoding='utf-8') as (file_in):
             if corpus == 'google':
-                reader = csv.reader(file_in, dialect='excel-tab', quoting=(csv.QUOTE_NONE))
+                reader = csv.reader(file_in, dialect='excel-tab', quoting=csv.QUOTE_NONE)
             else:
                 reader = csv.reader(file_in)
             for row in reader:

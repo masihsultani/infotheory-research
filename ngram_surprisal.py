@@ -2,10 +2,9 @@ from helper import *
 import pandas as pd
 
 
-def compute_surprisal(infolder, corpus, ngrams, stop_word):
+def compute_surprisal(corpus, ngrams, stop_word):
     """
 
-    :param infolder:
     :param corpus:
     :param ngrams:
     :param stop_word:
@@ -16,7 +15,7 @@ def compute_surprisal(infolder, corpus, ngrams, stop_word):
     long_forms = set(list(df.long.values))
     all_forms = short_forms | long_forms
 
-    context_count = get_gram_count(gram_conv[ngrams], infolder, corpus, stop_word)
-    probs = get_ngram_probs(ngrams, context_count, all_forms, infolder, corpus, stop_word)
+    context_count = get_gram_count(gram_conv[ngrams], corpus, stop_word)
+    probs = get_ngram_probs(ngrams, context_count, all_forms, corpus, stop_word)
     del context_count
     return probs

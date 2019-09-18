@@ -13,8 +13,8 @@ from gensim.test.utils import get_tmpfile
 
 if __name__ == "__main__":
     corpus = sys.argv[1]  # native or nonnative or google or wiki
-    stop_word = sys.argv[2]
-    ngrams = sys.argv[3]
+    stop_word = sys.argv[3]
+    ngrams = sys.argv[2]
     m = sys.argv[4]
     if m == "glove":
         glove_file = '/hal9000/masih/models/glove.6B.300d.txt'

@@ -30,7 +30,7 @@ if __name__ == "__main__":
     df = pd.read_csv("all_forms.csv", encoding="utf-8")  # load csv with long and short form words
     short_forms = set(list(df.short.values))
 
-    entropy_dict = compute_entropy(corpus, ngrams, stop_word)
+    entropy_dict = compute_entropy(corpus, ngrams, stop_words=stop_word)
     # cosine_dict = compute_cosine(filein, corpus, ngrams, model, stop_word)
     surprisal_dict = compute_surprisal(corpus, ngrams, stop_word)
     unigram_count = get_gram_count("unigram", corpus, stop_word)

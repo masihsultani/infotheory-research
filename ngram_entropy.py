@@ -29,7 +29,7 @@ def compute_entropy(corpus, gram, stop_words=None):
 
     gram_files = file_locations(gram, corpus=corpus, stop_words=stop_words)
     context_set = short_set | long_set
-    context_count = get_gram_count(gram_conv[gram], corpus, stop_words)
+    context_count = get_gram_count(gram_conv[gram], corpus, stop_words=stop_words)
 
     for file in gram_files:
         with open(file, 'r', encoding="utf-8") as file_2:

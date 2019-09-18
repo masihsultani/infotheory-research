@@ -1,11 +1,12 @@
 import csv
 import sys
 from ngram_entropy import compute_entropy
-from ngram_cosine import compute_cosine
+from ngram_cosine import compute_cosine, cosine_sim
 from ngram_surprisal import compute_surprisal
 from helper import get_gram_count
 import gensim
 import pandas as pd
+import numpy as np
 
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import get_tmpfile
@@ -35,7 +36,7 @@ if __name__ == "__main__":
     short_forms = set(list(df.short.values))
 
     entropy_dict = compute_entropy(filein, corpus, ngrams, stop_word)
-    cosine_dict = compute_cosine(filein, corpus, ngrams, model, stop_word)
+    # cosine_dict = compute_cosine(filein, corpus, ngrams, model, stop_word)
     surprisal_dict = compute_surprisal(filein, corpus, ngrams, stop_word)
     unigram_count = get_gram_count("unigram", filein, corpus, stop_word)
     sense_dict = {'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 'math': 7, 'limo': 8,
@@ -63,8 +64,10 @@ if __name__ == "__main__":
             else:
                 i = 1
             for context in surprisal_dict[word]:
-                surprisal = surprisal_dict[word][context]
+                surprisal = np.log2(1 / surprisal_dict[word][context])
+                phrase = context + " " + word
+                cosine = cosine_sim(phrase, model)
                 final_row = [context, word, i, sense_dict[word], unigram_count[word], surprisal, entropy_dict[context],
-                             cosine_dict[context][word]]
+                             cosine]
                 csvout.writerow(final_row)
     out_put.close()

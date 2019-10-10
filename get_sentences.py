@@ -24,7 +24,7 @@ def main_prog(infile, csv_file=True):
                 for line in file:
                     sentences = line[-1].lower().split('.')
                     for x in sentences:
-                        for y in x:
+                        for y in x.split():
                             if y in all_forms:
                                 file_out.write(x)
 

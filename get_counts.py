@@ -1,10 +1,7 @@
 import pandas as pd
 from helper import *
 from ast import literal_eval
-corpora = ["native","nonnative","google", "wiki"]
-grams =["unigram","bigram","trigram"]
-stop_words =["True","False"]
-
+import sys
 def get_count(gram_size, corpus, stop_words):
     """
 
@@ -14,7 +11,6 @@ def get_count(gram_size, corpus, stop_words):
     :return: dictionary
     """
     total_count =0
-    gram_count = defaultdict(int)
     all_gram_files = file_locations(gram_size, corpus=corpus, stop_words=stop_words)
     for file_ in all_gram_files:
         with open(file_, 'r', encoding='utf-8') as (temp_file):
@@ -35,18 +31,26 @@ def get_count(gram_size, corpus, stop_words):
 if __name__=="__main__":
     all_counts =[]
     corpora = ["native", "nonnative", "google", "wiki"]
-    grams = [ "bigram", "trigram"]
+    grams = ["bigram", "trigram"]
     stop_words = ["True", "False"]
 
     for corpus in corpora:
         corpus_list =[]
         for gram in grams:
             for stop_word in stop_words:
-                count = get_count(gram,corpus,stop_word)
-                corpus_list.append(count)
+                if corpus=="google" and stop_word=="True":
+                    count=0
+                    corpus_list.append(0)
+                else:
+                    count = get_count(gram,corpus,stop_word)
+                    corpus_list.append(count)
+                sys.stdout.flush()
 
+                print(f"{corpus} {gram} {count}")
+                sys.stdout.flush()
         unigram_count = get_count("unigram",corpus,None)
-        corpus_list.insert(0,unigram_count)
-    header =["unigram","bigram True","bigram False","trigram True","trigram False"]
+        corpus_list.append(unigram_count)
+        all_counts.append(corpus_list)
+    header =["bigram True","bigram False","trigram True","trigram False","unigram"]
     count_df = pd.DataFrame(all_counts,index=corpora,columns =header)
     count_df.to_csv("word_counts.csv",encoding="utf-8")

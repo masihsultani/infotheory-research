@@ -5,6 +5,7 @@ import csv
 from collections import defaultdict, Counter
 import sys
 import pandas as pd
+import json
 regex = re.compile('[%s]' % re.escape(punctuation))
 
 """
@@ -39,6 +40,20 @@ def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
                 clean_list = clean_string(line[-1], stop_word) #clean the string from punctuations and stop words
                 all_grams = gen_grams(clean_list, gram_size)
                 gram_counter.update(" ".join(tuple) for tuple in all_grams)
+        elif "json" in infile:
+            for line in file:
+                raw_data = json.loads(line)
+                if "body" in raw_data.keys():
+                    raw_text = raw_data["body"]
+
+                elif "selftext" in raw_data.keys():
+
+                    raw_text = raw_data["selftext"]
+
+                clean_list = clean_string(raw_text, stop_word)  # clean the string from punctuations and stop words
+                all_grams = gen_grams(clean_list, gram_size)
+                gram_counter.update(" ".join(tuple) for tuple in all_grams)
+
         else:
             for line in file:
                 clean_list = clean_string(line, stop_word) #clean the string from punctuations and stop words
@@ -126,6 +141,8 @@ if __name__ == "__main__":
         elif data=="wiki":
             filein = "/ais/hal9000/ella/wikipedia/eng/wikipedia.txt"
             main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
+        elif data=="usa":
+            filein ="/ais/hal9000/ella/reddit_2018/reddit_raw_data/reddit.US.raw.out"
         else:
             sys.exit()
 

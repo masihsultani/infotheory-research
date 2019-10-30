@@ -42,7 +42,9 @@ def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
                 gram_counter.update(" ".join(tuple) for tuple in all_grams)
         elif ".out" in infile:
             for line in file:
-                raw_data = json.loads(line)
+                str = file.read()
+                str = str.replace("\'", "\"")
+                raw_data = json.loads(str)
                 if "body" in raw_data.keys():
                     raw_text = raw_data["body"]
 

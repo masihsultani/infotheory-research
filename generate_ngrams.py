@@ -143,6 +143,7 @@ if __name__ == "__main__":
             main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
         elif data=="usa":
             filein ="/ais/hal9000/ella/reddit_2018/reddit_raw_data/reddit.US.raw.out"
+            main_prog(filein,"US",sys.argv[2],stop_word=dic2[stop],csv_file=False)
         else:
             sys.exit()
 

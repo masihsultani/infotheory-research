@@ -16,11 +16,11 @@ A script to generate ngrams from native or non native reddit corpus
 def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
     """
 
-    :param infile: str
+    :param infile: s
         The location of corpus
-    :param corpus: str
+    :param corpus: s
         string native or nonnative for saving final file
-    :param gram_size: str
+    :param gram_size: s
         bigram or trigram to count bigram or trigram count for corpus
     :param csv_file: boolean
         If true, corpus is a csv file
@@ -42,9 +42,13 @@ def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
                 gram_counter.update(" ".join(tuple) for tuple in all_grams)
         elif ".out" in infile:
             for line in file:
-                str = file.read()
-                str = str.replace("\'", "\"")
-                raw_data = json.loads(str)
+                s = file.read()
+                s = s.replace("\'", "\"")
+                s = s.replace('\t', '')
+                s = s.replace('\n', '')
+                s = s.replace(',}', '}')
+                s = s.replace(',]', ']')
+                raw_data = json.loads(s)
                 if "body" in raw_data.keys():
                     raw_text = raw_data["body"]
 
@@ -65,7 +69,7 @@ def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
     if gram_size == "unigram":
         file_out = f'/ais/hal9000/masih/surprisal/{corpus}/{gram_size}_{corpus}.csv'
     else:
-        file_out = f'/ais/hal9000/masih/surprisal/{corpus}/{gram_size}_{corpus}_{str(stop_word)}.csv'
+        file_out = f'/ais/hal9000/masih/surprisal/{corpus}/{gram_size}_{corpus}_{s(stop_word)}.csv'
 
     with open(file_out, 'w') as gram_file:
         writer = csv.writer(gram_file)

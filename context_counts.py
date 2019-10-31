@@ -4,7 +4,7 @@ from helper import *
 from collections import defaultdict
 import sys
 def main():
-    corpora = ["native", "nonnative", "google", "wiki"]
+    corpora = ["native", "nonnative", "google", "wiki", "UK", "US"]
     grams = ["bigram", "trigram"]
     stop_words = ["True", "False"]
     gram_conv = {"trigram": "bigram", "bigram": "unigram"}

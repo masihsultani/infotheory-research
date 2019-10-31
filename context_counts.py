@@ -17,7 +17,7 @@ def main():
                     file_name = f"/ais/hal9000/masih/surprisal/all_data/{corpus}_{gram}.csv"
                 else:
                     file_name = f"/ais/hal9000/masih/surprisal/all_data/{corpus}_{gram}_{stop_word}.csv"
-                df = pd.read_csv(f"{corpus}_{gram}_{stop_word}.csv", encoding="utf-8")
+                df = pd.read_csv(file_name, encoding="utf-8")
                 gram_count = get_gram_count(gram_conv[gram], corpus, stop_word)
                 df["context_count"] = df["context"].apply(lambda x: gram_count[x])
                 original_words = set(df["word"].unique())

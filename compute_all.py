@@ -15,17 +15,17 @@ def main(argv):
     corpus = argv[1]  # native or nonnative or google or wiki
     stop_word = argv[3]
     ngrams = argv[2]
-    m = argv[4]
-    if m == "glove":
-        glove_file = '/hal9000/masih/models/glove.6B.300d.txt'
-        tmp_file = get_tmpfile("test_word2vec.txt")
-        _ = glove2word2vec(glove_file, tmp_file)
-        glove2word2vec(glove_file, tmp_file)
-        model = gensim.models.KeyedVectors.load_word2vec_format(tmp_file)
-    else:
-        model = gensim.models.KeyedVectors.load_word2vec_format(
-            '/hal9000/masih/models/GoogleNews-vectors-negative300.bin',
-            binary=True)
+    #m = argv[4]
+    # if m == "glove":
+    #     glove_file = '/hal9000/masih/models/glove.6B.300d.txt'
+    #     tmp_file = get_tmpfile("test_word2vec.txt")
+    #     _ = glove2word2vec(glove_file, tmp_file)
+    #     glove2word2vec(glove_file, tmp_file)
+    #     model = gensim.models.KeyedVectors.load_word2vec_format(tmp_file)
+    # else:
+    #     model = gensim.models.KeyedVectors.load_word2vec_format(
+    #         '/hal9000/masih/models/GoogleNews-vectors-negative300.bin',
+    #         binary=True)
 
     df = pd.read_csv("all_forms.csv", encoding="utf-8")  # load csv with long and short form words
     short_forms = set(list(df.short.values))
@@ -60,10 +60,8 @@ def main(argv):
                 i = 1
             for context in surprisal_dict[word]:
                 surprisal = np.log2(1 / surprisal_dict[word][context])
-                phrase = context + " " + word
-                cosine = cosine_sim(phrase, model)
-                final_row = [context, word, i, sense_dict[word], unigram_count[word], surprisal, entropy_dict[context],
-                             cosine]
+
+                final_row = [context, word, i, sense_dict[word], unigram_count[word], surprisal, entropy_dict[context]]
                 csvout.writerow(final_row)
     out_put.close()
 

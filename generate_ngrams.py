@@ -42,12 +42,7 @@ def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
                 gram_counter.update(" ".join(tuple) for tuple in all_grams)
         elif ".out" in infile:
             for line in file:
-                s = file.read()
-                s = s.replace("\'", "\"")
-                s = s.replace('\t', '')
-                s = s.replace('\n', '')
-                s = s.replace(',}', '}')
-                s = s.replace(',]', ']')
+                s = line
                 raw_data = json.loads(s)
                 if "body" in raw_data.keys():
                     raw_text = raw_data["body"]
@@ -55,6 +50,8 @@ def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
                 elif "selftext" in raw_data.keys():
 
                     raw_text = raw_data["selftext"]
+                else:
+                    continue
 
                 clean_list = clean_string(raw_text, stop_word)  # clean the string from punctuations and stop words
                 all_grams = gen_grams(clean_list, gram_size)
@@ -69,7 +66,7 @@ def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
     if gram_size == "unigram":
         file_out = f'/ais/hal9000/masih/surprisal/{corpus}/{gram_size}_{corpus}.csv'
     else:
-        file_out = f'/ais/hal9000/masih/surprisal/{corpus}/{gram_size}_{corpus}_{s(stop_word)}.csv'
+        file_out = f'/ais/hal9000/masih/surprisal/{corpus}/{gram_size}_{corpus}_{stop_word}.csv'
 
     with open(file_out, 'w') as gram_file:
         writer = csv.writer(gram_file)
@@ -147,9 +144,12 @@ if __name__ == "__main__":
         elif data=="wiki":
             filein = "/ais/hal9000/ella/wikipedia/eng/wikipedia.txt"
             main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
-        elif (data == "US") or (data == "UK"):
+        elif data == "US":
             filein = f"/ais/hal9000/ella/reddit_2018/reddit_raw_data/reddit.{data}.raw.out"
             main_prog(filein,data,sys.argv[2],stop_word=dic2[stop],csv_file=False)
+        elif data == "UK":
+            filein = f"/ais/hal9000/masih/surprisal/UK/unitedkingdom.comment.json.out"
+            main_prog(filein, data, sys.argv[2], stop_word=dic2[stop], csv_file=False)
         else:
             sys.exit()
 

@@ -32,36 +32,37 @@ def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
 
 
     gram_counter = Counter()#bounter(size_mb=35840)
-    with open(infile, "r") as file:
+    for file_in in infile:
+        with open(file_in, "r") as file:
 
-        if csv_file:
-            file = csv.reader(file, delimiter=',')
-            for line in file:
-                clean_list = clean_string(line[-1], stop_word) #clean the string from punctuations and stop words
-                all_grams = gen_grams(clean_list, gram_size)
-                gram_counter.update(" ".join(tuple) for tuple in all_grams)
-        elif ".out" in infile:
-            for line in file:
-                s = line
-                raw_data = json.loads(s)
-                if "body" in raw_data.keys():
-                    raw_text = raw_data["body"]
+            if csv_file:
+                file = csv.reader(file, delimiter=',')
+                for line in file:
+                    clean_list = clean_string(line[-1], stop_word) #clean the string from punctuations and stop words
+                    all_grams = gen_grams(clean_list, gram_size)
+                    gram_counter.update(" ".join(tuple) for tuple in all_grams)
+            elif ".out" in infile:
+                for line in file:
+                    s = line
+                    raw_data = json.loads(s)
+                    if "body" in raw_data.keys():
+                        raw_text = raw_data["body"]
 
-                elif "selftext" in raw_data.keys():
+                    elif "selftext" in raw_data.keys():
 
-                    raw_text = raw_data["selftext"]
-                else:
-                    continue
+                        raw_text = raw_data["selftext"]
+                    else:
+                        continue
 
-                clean_list = clean_string(raw_text, stop_word)  # clean the string from punctuations and stop words
-                all_grams = gen_grams(clean_list, gram_size)
-                gram_counter.update(" ".join(tuple) for tuple in all_grams)
+                    clean_list = clean_string(raw_text, stop_word)  # clean the string from punctuations and stop words
+                    all_grams = gen_grams(clean_list, gram_size)
+                    gram_counter.update(" ".join(tuple) for tuple in all_grams)
 
-        else:
-            for line in file:
-                clean_list = clean_string(line, stop_word) #clean the string from punctuations and stop words
-                all_grams = gen_grams(clean_list, gram_size)
-                gram_counter.update(" ".join(tuple) for tuple in all_grams)
+            else:
+                for line in file:
+                    clean_list = clean_string(line, stop_word) #clean the string from punctuations and stop words
+                    all_grams = gen_grams(clean_list, gram_size)
+                    gram_counter.update(" ".join(tuple) for tuple in all_grams)
 
     if gram_size == "unigram":
         file_out = f'/ais/hal9000/masih/surprisal/{corpus}/{gram_size}_{corpus}.csv'
@@ -123,34 +124,38 @@ if __name__ == "__main__":
     stops = ['yes', 'no']
     words = pd.read_csv("function_words_127.txt", delimiter=' ', header=None)
     words = [clean_string(w, False)[0] for w in words[0].values]
-
+    grams=["trigram","bigram", "unigram"]
     FUNCTION_WORDS = set(words)
-    for stop in stops:
-        #data = sys.argv[1] # native or non native corpus
-        if (sys.argv[2] =="unigram")  and(stop=="yes"):
-            continue
+    for gram in grams:
+        for stop in stops:
+            #data = sys.argv[1] # native or non native corpus
+            if (gram =="unigram")  and(stop=="yes"):
+                continue
 
-        dic2 = {'yes': True, 'no': False}
+            dic2 = {'yes': True, 'no': False}
 
-        if data=="native":
-            filein = "/ais/hal9000/ella/reddit_2018/reddit.n.sent.all.shuf.csv"
-            main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop])
-        elif data=="nonnative":
-            filein= "/ais/hal9000/ella/reddit_2018/reddit.nn.sent.all.shuf.csv"
-            main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop])
-        elif data=="learners":
-            filein = "/ais/hal9000/ella/learners_data/learners.txt"
-            main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
-        elif data=="wiki":
-            filein = "/ais/hal9000/ella/wikipedia/eng/wikipedia.txt"
-            main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
-        elif data == "US":
-            filein = f"/ais/hal9000/ella/reddit_2018/reddit_raw_data/reddit.{data}.raw.out"
-            main_prog(filein,data,sys.argv[2],stop_word=dic2[stop],csv_file=False)
-        elif data == "UK":
-            filein = f"/ais/hal9000/masih/surprisal/UK/unitedkingdom.comment.json.out"
-            main_prog(filein, data, sys.argv[2], stop_word=dic2[stop], csv_file=False)
-        else:
-            sys.exit()
+            if data=="native":
+                filein = "/ais/hal9000/ella/reddit_2018/reddit.n.sent.all.shuf.csv"
+                main_prog(filein, data, gram_size=gram, stop_word=dic2[stop])
+            elif data=="nonnative":
+                filein= "/ais/hal9000/ella/reddit_2018/reddit.nn.sent.all.shuf.csv"
+                main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop])
+            elif data=="learners":
+                filein = "/ais/hal9000/ella/learners_data/learners.txt"
+                main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
+            elif data=="wiki":
+                filein = "/ais/hal9000/ella/wikipedia/eng/wikipedia.txt"
+                main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
+            elif data == "US":
+                filein = f"/ais/hal9000/ella/reddit_2018/reddit_raw_data/reddit.{data}.raw.out"
+                main_prog(filein,data,sys.argv[2],stop_word=dic2[stop],csv_file=False)
+            elif data == "UK":
+                filein = [f"/ais/hal9000/masih/surprisal/UK/unitedkingdom.comment.json.out", f"/ais/hal9000/masih/surprisal/UK/casualuk.comment.json.out"]
+                main_prog(filein, data, sys.argv[2], stop_word=dic2[stop], csv_file=False)
+            elif data == "europe":
+                filein = [f"/ais/hal9000/masih/surprisal/UK/europe.comment.json.out", f"/ais/hal9000/masih/surprisal/UK/askeurope.comment.json.out"]
+                main_prog(filein, data, gram, stop_word=dic2[stop], csv_file=False)
+            else:
+                sys.exit()
 
 

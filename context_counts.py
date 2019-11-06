@@ -4,7 +4,7 @@ from helper import *
 from collections import defaultdict
 import sys
 def main():
-    corpora = ["native", "nonnative", "google", "wiki", "UK", "US"]
+    corpora = [ "UK"]
     grams = ["bigram", "trigram"]
     stop_words = ["True", "False"]
     gram_conv = {"trigram": "bigram", "bigram": "unigram"}
@@ -39,7 +39,7 @@ def main():
                                 phrase_dict[temp_gram[-1]][temp_context] = literal_eval(row[1])
 
                     file_in.close()
-                df["phrase_count"] = df.apply(lambda x: phrase_dict[x.word][x.context])
+                df["phrase_count"] = df.apply(lambda x: phrase_dict[x["word"]][x["context"]], axis=1)
                 df.to_csv(file_name, index=None, encoding="utf-8")
                 print(f"{corpus} {gram} done")
                 sys.stdout.flush()

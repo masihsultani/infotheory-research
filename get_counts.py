@@ -11,7 +11,7 @@ def get_count(gram_size, corpus, stop_words):
     :return: dictionary
     """
 
-    files = file_locations(gram_size, corpus=corpus, stop_words=stop_word)
+    files = file_locations(gram_size, corpus=corpus, stop_words=stop_words)
 
     df = pd.read_csv(files[0], header=None, encoding="utf-8", usecols=[1])
     total_count = df[1].sum()
@@ -34,24 +34,16 @@ def get_count(gram_size, corpus, stop_words):
 
 
 all_counts =[]
-corpora = ["native", "nonnative", "wiki"]
-grams = ["bigram", "trigram"]
-stop_words = ["True", "False"]
+corpora = ["native", "nonnative", "wiki", "UK","US","europe"]
+grams = ["bigram", ]
+
 
 for corpus in corpora:
     corpus_list =[]
-    for gram in grams:
-        for stop_word in stop_words:
-            print(f"{corpus} {gram}")
-            sys.stdout.flush()
-            count = get_count(gram,corpus,stop_word)
-            corpus_list.append(count)
-            print(f"{corpus} {gram} {count} done")
-            sys.stdout.flush()
     unigram_count = get_count("unigram",corpus,None)
 
     corpus_list.append(unigram_count)
     all_counts.append(corpus_list)
-header =["bigram True","bigram False","trigram True","trigram False","unigram"]
+header =["unigram"]
 count_df = pd.DataFrame(all_counts,index=corpora,columns =header)
 count_df.to_csv("counts.csv",encoding="utf-8")

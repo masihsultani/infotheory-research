@@ -32,11 +32,11 @@ def main_func(argv):
     import pandas as pd
     counts = pd.read_csv("counts.csv", encoding="utf-8", index_col=0)
     counts.loc["google"] = [1024908267229]
-    corpus = argv[0]
-    gram = argv[1]
+    corpus = argv[1]
+    gram = argv[2]
     tokens = counts.loc[corpus][f"unigram"]
     if corpus != "google":
-        stop_word = argv[2]
+        stop_word = argv[3]
     else:
         stop_word = None
     first_gram_count = get_gram_count(gram_conv[gram], corpus, stop_word)

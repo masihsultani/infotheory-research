@@ -25,8 +25,6 @@ def compute_cond_entropy(corpus, gram, stop_word, context_count, token_count):
                 try:
                     cond_prop = int(row[1]) / context_count[temp_context]
                 except ZeroDivisionError:
-                    print(temp_context)
-                    sys.stdout.flush()
                     continue
 
                 joint_prop = int(row[1]) / token_count

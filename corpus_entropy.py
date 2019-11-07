@@ -22,7 +22,13 @@ def compute_cond_entropy(corpus, gram, stop_word, context_count, token_count):
             for row in reader:
                 temp_gram = row[0].lower().split()
                 temp_context = ' '.join(word for word in temp_gram[:-1])
-                cond_prop = int(row[1]) / context_count[temp_context]
+                try:
+                    cond_prop = int(row[1]) / context_count[temp_context]
+                except ZeroDivisionError:
+                    print(temp_context)
+                    sys.stdout.flush()
+                    continue
+
                 joint_prop = int(row[1]) / token_count
                 entropy += joint_prop * np.log2(1 / cond_prop)
     return entropy
@@ -55,16 +61,16 @@ def main_func(argv):
     sys.stdout.flush()
 
 if __name__=="__main__":
-    corpora = ["native", "nonnative", "google", "wiki", "europe", "US"]
+    corpus = sys.argv[1]
     grams = ["bigram", "trigram"]
     stop_words = ["True", "False"]
-    for corpus in corpora:
-        for gram in grams:
-            for t in stop_words:
-                if (corpus == "google") and (t == "True"):
-                    continue
-                args =[corpus,gram,t]
-                main_func(args)
+
+    for gram in grams:
+        for t in stop_words:
+            if (corpus == "google") and (t == "True"):
+                continue
+            args =[corpus,gram,t]
+            main_func(args)
 
 
 

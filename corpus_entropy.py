@@ -46,6 +46,8 @@ def main_func(argv):
     else:
         unigrams = get_gram_count("unigram", corpus, None)
     entropy = compute_entropy(unigrams, tokens)
+    print("done entropy")
+    sys.stdout.flush()
     conditional_entropy = compute_cond_entropy(corpus, gram, stop_word, first_gram_count, tokens)
 
     mutualInformation = entropy - conditional_entropy
@@ -53,4 +55,16 @@ def main_func(argv):
     sys.stdout.flush()
 
 if __name__=="__main__":
-    main_func(sys.argv)
+    corpora = ["native", "nonnative", "google", "wiki", "europe", "US"]
+    grams = ["bigram", "trigram"]
+    stop_words = ["True", "False"]
+    for corpus in corpora:
+        for gram in grams:
+            for t in stop_words:
+                if (corpus == "google") and (t == "True"):
+                    continue
+                args =[corpus,gram,t]
+                main_func(args)
+
+
+

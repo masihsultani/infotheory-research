@@ -10,6 +10,8 @@ regex = re.compile('[%s]' % re.escape(punctuation))
 def main_prog(infile, out_file, stop_words=False, csv_file=True):
     """
 
+    :param out_file:
+    :param stop_words:
     :param infile: str
         The location of corpus
     :param csv_file: boolean

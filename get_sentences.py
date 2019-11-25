@@ -79,5 +79,5 @@ if __name__ == "__main__":
         csv_file = False
     else:
         sys.exit()
-    file_out = f"ais/hal9000/masih/sentences/{corpus}_sentences_{False}.csv"
+    file_out = f"/ais/hal9000/masih/sentences/{corpus}_sentences_{False}.csv"
     main_prog(filein, file_out, csv_file)

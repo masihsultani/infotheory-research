@@ -41,10 +41,10 @@ def main_prog(infile, out_file, stop_words=False, csv_file=True):
                 if len(cleaned_words) > 14:
                     for word in cleaned_words:
                         if word in short_forms:
-                            temp = [cleaned_string, 0, word]
+                            temp = [cleaned_string.replace(word,""), 0, word]
                             csvout.writerow(temp)
                         elif word in long_forms:
-                            temp = [cleaned_string, 1, word]
+                            temp = [cleaned_string.replace(word,""), 1, word]
                             csvout.writerow(temp)
                         else:
                             continue

@@ -7,7 +7,7 @@ from string import punctuation
 regex = re.compile('[%s]' % re.escape(punctuation))
 
 
-def main_prog(infile, out_file, stop_words=False, csv_file=True):
+def main_prog(infile, out_file,csv_file stop_words=False):
     """
 
     :param out_file:

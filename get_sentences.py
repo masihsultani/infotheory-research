@@ -22,7 +22,7 @@ def main_prog(infile, out_file, stop_words=False, csv_file=True):
 
     df = pd.read_csv("all_forms.csv", encoding="utf-8")  # load csv with long and short form words
     short_forms = set(list(df.short.values))
-    long_forms = set(list(df.short.values))
+    long_forms = set(list(df.long.values))
 
     with open(out_file, "w") as out_file:
         with open(infile, "r") as file:

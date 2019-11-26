@@ -20,12 +20,14 @@ def train_model(df):
         location of fake headline file
     """
     count = min(df.form.value_counts())
+    if count<500:
+        return np.zeros(10), np.zeros(10)
     short = df[df["form"] == 0].sample(count)
     long = df[df["form"] == 1].sample(count)
     df = pd.concat([short, long], ignore_index=True)
     all_data = df[["sentence", "form"]].values
     headlines, Y = all_data[:, 0], np.array(all_data[:, 1], dtype='int64')
-    vectorizor = CountVectorizer(min_df=0.001)
+    vectorizor = CountVectorizer(min_df=0.01)
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
     rf = RandomForestClassifier(n_estimators=25, criterion="entropy")

@@ -19,7 +19,10 @@ def train_model(df):
     fake_file: str
         location of fake headline file
     """
-    count = min(df.form.value_counts())
+    try:
+        count = min(df.form.value_counts())
+    except ValueError:
+        count =0
     if count<500:
         return np.zeros(10), np.zeros(10)
     short = df[df["form"] == 0].sample(count)
@@ -40,7 +43,7 @@ def train_model(df):
 def compute_scores(df):
     lr_scores = []
     rf_scores = []
-    for i in range(0, 23):
+    for i in range(23):
         if i != 0:
             df = df[df["sense"] == i]
 

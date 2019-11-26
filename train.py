@@ -33,11 +33,11 @@ def train_model(df):
     vectorizor = CountVectorizer(min_df=0.01)
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
-    rf = RandomForestClassifier(n_estimators=25, criterion="entropy")
+    #rf = RandomForestClassifier(n_estimators=25, criterion="entropy")
     lr = LogisticRegression()
-    rf_scores = cross_val_score(rf, X, Y, cv=10)
+    #rf_scores = cross_val_score(rf, X, Y, cv=10)
     lr_scores = cross_val_score(lr, X, Y, cv=10)
-    return lr_scores,rf_scores
+    return lr_scores #rf_scores
 
 
 def compute_scores(df):
@@ -51,8 +51,8 @@ def compute_scores(df):
 
         all_score = train_model(df1)
         lr_scores.append(all_score[0].mean())
-        rf_scores.append(all_score[1].mean())
-    return lr_scores, rf_scores
+        #rf_scores.append(all_score[1].mean())
+    return lr_scores #, rf_scores
 
 
 if __name__ == "__main__":
@@ -63,9 +63,9 @@ if __name__ == "__main__":
         file_in = f"/ais/hal9000/masih/sentences/{corpus}_sentences_False.csv"
         df = pd.read_csv(file_in, encoding="utf-8")
         s = compute_scores(df)
-        all_rf_scores.append(s[1])
-        all_lr_scores.append(s[0])
-    rf_results = pd.DataFrame(data=all_rf_scores, columns=corpora)
+        #all_rf_scores.append(s[1])
+        all_lr_scores.append(s)
+    #rf_results = pd.DataFrame(data=all_rf_scores, columns=corpora)
     lr_results = pd.DataFrame(data=all_lr_scores, columns=corpora)
-    rf_results.to_csv("random_forest_results.csv", encoding="utf-8", index=None)
+    #rf_results.to_csv("random_forest_results.csv", encoding="utf-8", index=None)
     lr_results.to_csv("logistic_reg_results.csv", encoding="utf-8", index=None)

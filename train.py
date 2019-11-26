@@ -36,20 +36,20 @@ def train_model(df):
     lr = LogisticRegression()
 
     lr_scores = cross_val_score(lr, X, Y, cv=10)
-    return lr_scores
+    return lr_scores.mean()
 
 
 def compute_scores(df):
     lr_scores = []
 
-    for i in range(23):
+    for i in range(2):
         if i != 0:
             df1 = df[df["sense"] == i]
         else:
             df1=df
 
         all_score = train_model(df1)
-        lr_scores.append(all_score.mean())
+        lr_scores.append(all_score)
     return lr_scores
 
 

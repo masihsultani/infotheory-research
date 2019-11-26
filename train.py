@@ -50,7 +50,7 @@ def compute_scores(df):
             df1=df
 
         all_score = train_model(df1)
-        lr_scores.append(all_score[0].mean())
+        lr_scores.append(all_score.mean())
         #rf_scores.append(all_score[1].mean())
     return lr_scores #, rf_scores
 

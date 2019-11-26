@@ -46,6 +46,8 @@ def compute_scores(df):
     for i in range(23):
         if i != 0:
             df1 = df[df["sense"] == i]
+        else:
+            df1=df
 
         all_score = train_model(df1)
         lr_scores.append(all_score[0].mean())

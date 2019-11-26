@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
 
-def train_model(df, model):
+def train_model(df):
     """
     A function that converts text data into M x N matrix where M
     is number of headlines, and N is feature space dimension(vocabulary)
@@ -28,8 +28,11 @@ def train_model(df, model):
     vectorizor = CountVectorizer(min_df=0.001)
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
-    scores = cross_val_score(model, X, Y, cv=10)
-    return scores
+    rf = RandomForestClassifier(n_estimators=25, criterion="entropy")
+    lr = LogisticRegression()
+    rf_scores = cross_val_score(rf, X, Y, cv=10)
+    lr_scores = cross_val_score(lr, X, Y, cv=10)
+    return lr_scores,rf_scores
 
 
 def compute_scores(df):
@@ -39,12 +42,9 @@ def compute_scores(df):
         if i != 0:
             df = df[df["sense"] == i]
 
-        rf = RandomForestClassifier(n_estimators=25, criterion="entropy")
-        lr = LogisticRegression()
-        lr_score = train_model(df, lr).mean()
-        lr_scores.append(lr_score)
-        rf_score = train_model(df, rf).mean()
-        rf_scores.append(rf_score)
+        all_score = train_model(df)
+        lr_scores.append(all_score[0].mean())
+        rf_scores.append(all_score[1].mean())
     return lr_scores, rf_scores
 
 

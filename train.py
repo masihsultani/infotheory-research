@@ -32,7 +32,7 @@ def train_model(df, model):
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
 
-    lr_scores = cross_val_score(model, X, Y, cv=10)
+    lr_scores = cross_val_score(model, X, Y, cv=5)
     return lr_scores.mean()
 
 

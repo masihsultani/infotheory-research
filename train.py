@@ -30,7 +30,7 @@ def train_model(df):
     df = pd.concat([short, long], ignore_index=True)
     all_data = df[["sentence", "form"]].values
     headlines, Y = all_data[:, 0], np.array(all_data[:, 1], dtype='int64')
-    vectorizor = CountVectorizer(min_df=0.1)
+    vectorizor = CountVectorizer(min_df=0.001)
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
     lr = LogisticRegression()
@@ -42,7 +42,7 @@ def train_model(df):
 def compute_scores(df):
     lr_scores = []
 
-    for i in range(2):
+    for i in range(23):
         if i != 0:
             df1 = df[df["sense"] == i]
         else:

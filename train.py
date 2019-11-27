@@ -20,15 +20,15 @@ def train_model(df, model):
     try:
         count = min(df.form.value_counts())
     except ValueError:
-        count = 0
+        return 0
     if count < 500:
-        return np.zeros(10), np.zeros(10)
+        return 0
     short = df[df["form"] == 0].sample(count)
     long = df[df["form"] == 1].sample(count)
     df = pd.concat([short, long], ignore_index=True)
     all_data = df[["sentence", "form"]].values
     headlines, Y = all_data[:, 0], np.array(all_data[:, 1], dtype='int64')
-    vectorizor = CountVectorizer(min_df=0.001)
+    vectorizor = CountVectorizer(min_df=0.1)
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
 
@@ -62,7 +62,7 @@ def compute_scores(df, model):
 
 if __name__ == "__main__":
     model = sys.argv[1]
-    corpora = ["native", "nonnative", "wiki"]
+    corpora = ["native"] #, "nonnative", "wiki"]
     all_rf_scores = []
     all_lr_scores = {}
     for corpus in corpora:

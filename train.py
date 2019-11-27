@@ -30,7 +30,7 @@ def train_model(df):
     df = pd.concat([short, long], ignore_index=True)
     all_data = df[["sentence", "form"]].values
     headlines, Y = all_data[:, 0], np.array(all_data[:, 1], dtype='int64')
-    vectorizor = CountVectorizer(min_df=0.01)
+    vectorizor = CountVectorizer(min_df=0.1)
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
     lr = LogisticRegression()
@@ -56,14 +56,14 @@ def compute_scores(df):
 if __name__ == "__main__":
     corpora = ["native", "nonnative", "wiki"]
     all_rf_scores = []
-    all_lr_scores = []
+    all_lr_scores = {}
     for corpus in corpora:
         file_in = f"/ais/hal9000/masih/sentences/{corpus}_sentences_False.csv"
         df = pd.read_csv(file_in, encoding="utf-8")
         s = compute_scores(df)
 
-        all_lr_scores.append(s)
+        all_lr_scores[corpus] = s
 
-    lr_results = pd.DataFrame(data=all_lr_scores, columns=corpora)
+    lr_results = pd.DataFrame(data=all_lr_scores)
 
     lr_results.to_csv("logistic_reg_results.csv", encoding="utf-8", index=None)

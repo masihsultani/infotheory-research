@@ -54,10 +54,12 @@ def main_prog(infile, out_file,csv_file, stop_words=False):
                             continue
                 if word1 is not None:
                     temp = [cleaned_string, word1, word2, WORD_SENSE_DICT[word1]]
+                    csvout.writerow(temp)
                 elif word2 is not None:
-                    temp = [cleaned_string, word1, word2, WORD_SENSE_DICT[word1]]
+                    temp = [cleaned_string, word1, word2, WORD_SENSE_DICT[word2]]
+                    csvout.writerow(temp)
 
-                csvout.writerow(temp)
+
 
 
 

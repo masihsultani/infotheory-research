@@ -12,6 +12,15 @@ import sys
 
 gram_conv = {"trigram": "bigram", "bigram": "unigram"}
 
+WORD_SENSE_DICT = {'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 'math': 7, 'limo': 8,
+                  'ref': 15, 'roach': 16, 'fridge': 17, 'exam': 18, 'chemo': 19, 'sax': 20, 'frat': 21, 'memo': 22,
+                  'dorm': 9, 'kilo': 10, 'rhino': 11, 'undergrad': 12, 'hippo': 13, 'chimp': 14,
+                  'telephone': 3, 'refrigerator': 17, 'undergraduate': 12, 'mathematics': 7,
+                  'examination': 18, 'television': 5, 'photograph': 2, 'memorandum': 22, 'bicycle': 4,
+                  'pornography': 1, 'fraternity': 21, 'limousine': 8, 'referee': 15, 'saxophone': 20,
+                  'carbohydrate': 6, 'chemotherapy': 19, 'hippopotamus': 13, 'cockroach': 16,
+                  'kilogram': 10, 'rhinoceros': 11, 'dormitory': 9, 'chimpanzee': 14}
+
 
 def get_context(words, gram, corpus, stop_words, keep_words=False):
     """

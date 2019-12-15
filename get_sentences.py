@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 import re
 from string import punctuation
-
+from helper import WORD_SENSE_DICT
 regex = re.compile('[%s]' % re.escape(punctuation))
 
 
@@ -31,23 +31,34 @@ def main_prog(infile, out_file,csv_file, stop_words=False):
                 reader = csv.reader(file)
             else:
                 reader = file
-            csvout.writerow(["sentence", "form", "word"])
+            csvout.writerow(["sentence", "word1", "word2", "sense"])
             for line in reader:
                 if csv_file:
                     cleaned_string = clean_string(line[3])
                 else:
                     cleaned_string = clean_string(line)
                 cleaned_words = cleaned_string.split()
+                word1 = None
+                word2 = None
                 if len(cleaned_words) > 14:
+
                     for word in cleaned_words:
                         if word in short_forms:
-                            temp = [cleaned_string.replace(f"{word} ",""), 0, word]
-                            csvout.writerow(temp)
+                            cleaned_string = re.sub(r'\b%s\b'%word, '<s>', cleaned_string)
+                            word1 = word
                         elif word in long_forms:
-                            temp = [cleaned_string.replace(f"{word} ",""), 1, word]
-                            csvout.writerow(temp)
+                            word2 = word
+                            cleaned_string = re.sub(r'\b%s\b' % word, '<l>', cleaned_string)
+
                         else:
                             continue
+                if word1 is not None:
+                    temp = [cleaned_string, word1, word2, WORD_SENSE_DICT[word1]]
+                elif word2 is not None:
+                    temp = [cleaned_string, word1, word2, WORD_SENSE_DICT[word1]]
+
+                csvout.writerow(temp)
+
 
 
 def clean_string(string):

@@ -7,8 +7,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
 def train_all(df, model):
-    short = df[(df.word1 is not None) & (df.word2 is None)]
-    long = df[(df.word1 is not None) & (df.word2 is None)]
+    short = df[(df.word1.isnull()==False) & (df.word2.isnull())]
+    long = df[(df.word1.isnull()) & (df.word2.isnull()==False)]
     short["form"] = 0
     long["form"] = 0
     short["sentence"] = short["sentence"].apply(lambda x: x.replace("<s>", ""))
@@ -40,8 +40,8 @@ def train_model(df, model):
 
     """
 
-    short = df[(df.word1 is not None) & (df.word2 is None)]
-    long = df[(df.word1 is not None) & (df.word2 is None)]
+    short = df[(df.word1.isnull() == False) & (df.word2.isnull())]
+    long = df[(df.word1.isnull()) & (df.word2.isnull() == False)]
     try:
         count = min(len(short),len(long))
     except ValueError:

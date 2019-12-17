@@ -6,6 +6,28 @@ from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
+def train_all(df, model):
+    short = df[(df.word1 is not None) & (df.word2 is None)]
+    long = df[(df.word1 is not None) & (df.word2 is None)]
+    short["form"] = 0
+    long["form"] = 0
+    short["sentence"] = short["sentence"].apply(lambda x: x.replace("<s>", ""))
+    long["sentence"] = long["sentence"].apply(lambda x: x.replace("<l>", ""))
+
+    short = short.groupby('word1', group_keys=False).apply(pd.DataFrame.sample, n=100)
+
+    long = long.groupby('word2', group_keys=False).apply(pd.DataFrame.sample, n=100)
+
+    df = pd.concat([short, long], ignore_index=True)
+    all_data = df[["sentence", "form"]].values
+    headlines, Y = all_data[:, 0], np.array(all_data[:, 1], dtype='int64')
+    vectorizor = CountVectorizer(min_df=0.01, ngram_range=(1, 2))
+    X_fitted = vectorizor.fit_transform(headlines)
+    X = X_fitted.toarray()
+
+    lr_scores = cross_val_score(model, X, Y, cv=5)
+    return lr_scores.mean()
+
 
 def train_model(df, model):
     """
@@ -17,18 +39,27 @@ def train_model(df, model):
     :return:
 
     """
+
+    short = df[(df.word1 is not None) & (df.word2 is None)]
+    long = df[(df.word1 is not None) & (df.word2 is None)]
     try:
-        count = min(df.form.value_counts())
+        count = min(len(short),len(long))
     except ValueError:
         return 0
-    if count < 500:
+    if count < 1000:
         return 0
-    short = df[df["form"] == 0].sample(count)
-    long = df[df["form"] == 1].sample(count)
+    short["form"] = 0
+    long["form"] =0
+    short["sentence"] = short["sentence"].apply(lambda x: x.replace("<s>",""))
+    long["sentence"] = long["sentence"].apply(lambda x: x.replace("<l>",""))
+    short = short.sample(count)
+    long = long.sample(count)
+
+
     df = pd.concat([short, long], ignore_index=True)
     all_data = df[["sentence", "form"]].values
     headlines, Y = all_data[:, 0], np.array(all_data[:, 1], dtype='int64')
-    vectorizor = CountVectorizer(min_df=0.005)
+    vectorizor = CountVectorizer(min_df=0.01, ngram_range=(1,2))
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
 
@@ -46,16 +77,19 @@ def compute_scores(df, model):
     lr_scores = []
 
     for i in range(23):
-        if i != 0:
-            df1 = df[df["sense"] == i]
-        else:
-            df1 = df
+
         if model == "LR":
             m = LogisticRegression()
         else:
             m = RandomForestClassifier(n_estimators=30)
 
-        all_score = train_model(df1, m)
+        if i != 0:
+            df1 = df[df["sense"] == i]
+            all_score = train_model(df1, m)
+        else:
+            df1 = df
+            all_score = train_all(df1, m)
+
         lr_scores.append(all_score)
     return lr_scores
 

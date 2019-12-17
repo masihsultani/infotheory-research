@@ -10,7 +10,7 @@ def train_all(df, model):
     short = df[(df.word1.isnull()==False) & (df.word2.isnull())]
     long = df[(df.word1.isnull()) & (df.word2.isnull()==False)]
     short["form"] = 0
-    long["form"] = 0
+    long["form"] = 1
     short["sentence"] = short["sentence"].apply(lambda x: x.replace("<s>", ""))
     long["sentence"] = long["sentence"].apply(lambda x: x.replace("<l>", ""))
 
@@ -49,7 +49,7 @@ def train_model(df, model):
     if count < 1000:
         return 0
     short["form"] = 0
-    long["form"] =0
+    long["form"] =1
     short["sentence"] = short["sentence"].apply(lambda x: x.replace("<s>",""))
     long["sentence"] = long["sentence"].apply(lambda x: x.replace("<l>",""))
     short = short.sample(count)

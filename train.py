@@ -32,7 +32,7 @@ def train_model(df, model):
     X_fitted = vectorizor.fit_transform(headlines)
     X = X_fitted.toarray()
 
-    lr_scores = cross_val_score(model, X, Y, cv=5)
+    lr_scores = cross_val_score(model, X, Y, cv=10)
     return lr_scores.mean()
 
 
@@ -53,7 +53,7 @@ def compute_scores(df, model):
         if model == "LR":
             m = LogisticRegression()
         else:
-            m = RandomForestClassifier(n_estimators=20)
+            m = RandomForestClassifier(n_estimators=30)
 
         all_score = train_model(df1, m)
         lr_scores.append(all_score)

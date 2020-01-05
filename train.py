@@ -95,6 +95,10 @@ def compute_scores(df, model):
 
 
 if __name__ == "__main__":
+    sense_dict = {'all': 0, 'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 'math': 7, 'limo': 8,
+                  'ref': 15, 'roach': 16, 'fridge': 17, 'exam': 18, 'chemo': 19, 'sax': 20, 'frat': 21, 'memo': 22,
+                  'dorm': 9, 'kilo': 10, 'rhino': 11, 'undergrad': 12, 'hippo': 13, 'chimp': 14}
+    inv_map = {v: k for k, v in sense_dict.items()}
     model = sys.argv[1]
     corpora = ["native", "nonnative", "wiki"]
     all_rf_scores = []
@@ -107,5 +111,6 @@ if __name__ == "__main__":
         all_lr_scores[corpus] = s
 
     lr_results = pd.DataFrame(data=all_lr_scores)
+    lr_results["sense"] = lr_results.index.to_series().apply(lambda x: inv_map[x])
 
     lr_results.to_csv(f"{model}_results.csv", encoding="utf-8", index=None)

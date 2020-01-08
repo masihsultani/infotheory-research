@@ -140,7 +140,7 @@ if __name__== "__main__":
     corpus_results =[]
     for corpus in corpora:
         file_in = f"/hal9000/masih/sentences/{corpus}_sentences_False.csv"
-        sentences, labels = load_data(file_in, 100)
+        sentences, labels = load_data(file_in, 10)
         token_list = build_tokens(tokenizer, sentences)
         scores = compute_acc(token_list, labels, bert_model, tokenizer)
         corpus_results.append(scores)

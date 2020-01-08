@@ -136,16 +136,18 @@ if __name__ == "__main__":
     bert_model = BertForMaskedLM.from_pretrained('bert-base-uncased')
     bert_model.cuda()
     bert_model.eval()
+    count =100
     corpora = ["native","nonnative","wiki"]
     corpus_results =[]
     for corpus in corpora:
         file_in = f"/hal9000/masih/sentences/{corpus}_sentences_False.csv"
-        sentences, labels = load_data(file_in, 10)
+        sentences, labels = load_data(file_in, count)
         token_list = build_tokens(tokenizer, sentences)
         scores = compute_acc(token_list, labels, bert_model, tokenizer)
         corpus_results.append(scores)
 
     results_df = pd.concat([pd.DataFrame.from_dict(corpus_results[i],orient='index', columns=[corpora[i]])
                             for i in range(len(corpus_results))], axis=1)
+    results_df = results_df/(2*count)
     results_df.to_csv("bert_results.csv", index=True, encoding='utf-8')
 

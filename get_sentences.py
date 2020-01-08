@@ -68,6 +68,7 @@ def clean_string(string):
     string = string.lower()
 
     string = regex.sub("", string)
+    string =  re.sub(r'http\S+', '', string)
     return string
 
 

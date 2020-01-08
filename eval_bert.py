@@ -131,7 +131,7 @@ def compute_acc(token_list, labels, model, tokenizer):
     return word_scores
 
 
-if __name__== "__main__":
+if __name__ == "__main__":
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
     bert_model = BertForMaskedLM.from_pretrained('bert-base-uncased')
     bert_model.cuda()
@@ -145,7 +145,7 @@ if __name__== "__main__":
         scores = compute_acc(token_list, labels, bert_model, tokenizer)
         corpus_results.append(scores)
 
-    results_df = pd.concat([pd.DataFrame.from_dict(corpus_results[i],orient='index', columns=corpora[i])
+    results_df = pd.concat([pd.DataFrame.from_dict(corpus_results[i],orient='index', columns=[corpora[i]])
                             for i in range(len(corpus_results))], axis=1)
     results_df.to_csv("bert_results.csv", index=True, encoding='utf-8')
 

@@ -1,4 +1,4 @@
-from helper import *
+from tools.helper import *
 import pandas as pd
 
 
@@ -10,7 +10,7 @@ def compute_surprisal(corpus, ngrams, stop_word):
     :param stop_word:
     :return:
     """
-    df = pd.read_csv("all_forms.csv", encoding="utf-8")  # load csv with long and short form words
+    df = pd.read_csv("../data/all_forms.csv", encoding="utf-8")  # load csv with long and short form words
     short_forms = set(list(df.short.values))
     long_forms = set(list(df.long.values))
     all_forms = short_forms | long_forms

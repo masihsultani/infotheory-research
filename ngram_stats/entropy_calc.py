@@ -1,5 +1,5 @@
 from corpus_entropy import compute_entropy
-from helper import*
+from tools.helper import*
 
 
 if __name__ == '__main__':

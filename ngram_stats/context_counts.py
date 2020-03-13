@@ -1,17 +1,16 @@
 import pandas as pd
-import csv
-from helper import *
+from tools.helper import *
 from collections import defaultdict
 import sys
 def main():
-    corpora = [ "UK"]
+    corpora = [ "native","wiki", "google"]
     grams = ["bigram", "trigram"]
-    stop_words = ["True", "False"]
+    stop_words = [ "False"]
     gram_conv = {"trigram": "bigram", "bigram": "unigram"}
     for corpus in corpora:
         for gram in grams:
             for stop_word in stop_words:
-                if (stop_word == "False") and (corpus == "google"):
+                if (stop_word == "True") and (corpus == "google"):
                     continue
                 if corpus == "google":
                     file_name = f"/ais/hal9000/masih/surprisal/all_data/{corpus}_{gram}.csv"

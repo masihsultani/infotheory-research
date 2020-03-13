@@ -13,24 +13,24 @@ import sys
 gram_conv = {"trigram": "bigram", "bigram": "unigram"}
 
 WORD_SENSE_DICT = {'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 'math': 7, 'limo': 8,
-                  'ref': 15, 'roach': 16, 'fridge': 17, 'exam': 18, 'chemo': 19, 'sax': 20, 'frat': 21, 'memo': 22,
-                  'dorm': 9, 'kilo': 10, 'rhino': 11, 'undergrad': 12, 'hippo': 13, 'chimp': 14,
-                  'telephone': 3, 'refrigerator': 17, 'undergraduate': 12, 'mathematics': 7,
-                  'examination': 18, 'television': 5, 'photograph': 2, 'memorandum': 22, 'bicycle': 4,
-                  'pornography': 1, 'fraternity': 21, 'limousine': 8, 'referee': 15, 'saxophone': 20,
-                  'carbohydrate': 6, 'chemotherapy': 19, 'hippopotamus': 13, 'cockroach': 16,
-                  'kilogram': 10, 'rhinoceros': 11, 'dormitory': 9, 'chimpanzee': 14}
+                   'ref': 15, 'roach': 16, 'fridge': 17, 'exam': 18, 'chemo': 19, 'sax': 20, 'frat': 21, 'memo': 22,
+                   'dorm': 9, 'kilo': 10, 'rhino': 11, 'undergrad': 12, 'hippo': 13, 'chimp': 14,
+                   'telephone': 3, 'refrigerator': 17, 'undergraduate': 12, 'mathematics': 7,
+                   'examination': 18, 'television': 5, 'photograph': 2, 'memorandum': 22, 'bicycle': 4,
+                   'pornography': 1, 'fraternity': 21, 'limousine': 8, 'referee': 15, 'saxophone': 20,
+                   'carbohydrate': 6, 'chemotherapy': 19, 'hippopotamus': 13, 'cockroach': 16,
+                   'kilogram': 10, 'rhinoceros': 11, 'dormitory': 9, 'chimpanzee': 14, 'lab': 23, 'laboratory': 23,
+                   'info': 24, 'information': 24}
 
 
-def get_context(words, gram, corpus, stop_words, keep_words=False):
+def get_context(words, gram, corpus, stop_words):
     """
     Helper function to get contexts for a set of words
-    :param keep_words:
-    :param gram:
-    :param stop_words:
+    :param gram: str
+    :param stop_words: str
     :param corpus: str
     :param words: set
-    :return:
+    :return: set
     """
     contexts = set()
     all_files = file_locations(gram, corpus, stop_words)
@@ -54,7 +54,7 @@ def get_context(words, gram, corpus, stop_words, keep_words=False):
 
 def file_locations(gram, corpus, stop_words=None):
     """
-
+    Returns list of file location where n gram counts are stored
     :param stop_words:
     :param corpus:
     :param gram: str
@@ -105,7 +105,7 @@ def file_locations(gram, corpus, stop_words=None):
 
 def get_gram_count(gram_size, corpus, stop_words):
     """
-
+    Get a dictionary count for n gram phrases
     :param gram_size: str
     :param corpus: str
     :param stop_words: str
@@ -117,13 +117,10 @@ def get_gram_count(gram_size, corpus, stop_words):
         with open(file_, 'r', encoding='utf-8') as (temp_file):
             if corpus == 'google':
                 csv_reader = csv.reader(temp_file, dialect='excel-tab', quoting=csv.QUOTE_NONE)
-                for row in csv_reader:
-                    gram_count[row[0].lower()] += literal_eval(row[1])
-
             else:
                 csv_reader = csv.reader(temp_file)
-                for row in csv_reader:
-                    gram_count[row[0]] = literal_eval(row[1])
+            for row in csv_reader:
+                gram_count[row[0].lower()] += literal_eval(row[1])
 
         temp_file.close()
 
@@ -132,13 +129,13 @@ def get_gram_count(gram_size, corpus, stop_words):
 
 def get_ngram_probs(gram_size, context_count, words, corpus, stop_words):
     """
-
-    :param gram_size:
-    :param context_count:
-    :param words:
-    :param corpus:
-    :param stop_words:
-    :return:
+    Memory intensive function that loads conditional probability of n gram
+    :param gram_size: str
+    :param context_count: dictionary
+    :param words: list
+    :param corpus: str
+    :param stop_words: str
+    :return: dictionary nested dict[word][context] = prob
     """
     prime_probs = defaultdict(lambda: defaultdict(float))
     all_files = file_locations(gram_size, corpus=corpus, stop_words=stop_words)
@@ -163,4 +160,29 @@ def get_ngram_probs(gram_size, context_count, words, corpus, stop_words):
         file_in.close()
 
     return prime_probs
+
+
+def get_context_counts(context_set, gram_size, corpus, stop_words):
+    """
+
+    :param context_set:
+    :param gram_size:
+    :param corpus:
+    :param stop_words:
+    :return:
+    """
+    context_counts = defaultdict(float)
+    all_gram_files = file_locations(gram_size, corpus=corpus, stop_words=stop_words)
+    for file_ in all_gram_files:
+        with open(file_, 'r', encoding='utf-8') as (temp_file):
+            if corpus == 'google':
+                csv_reader = csv.reader(temp_file, dialect='excel-tab', quoting=csv.QUOTE_NONE)
+            else:
+                csv_reader = csv.reader(temp_file)
+            for row in csv_reader:
+                if row[0].lower() in context_set:
+                    context_counts[row[0].lower()] += literal_eval(row[1])
+        temp_file.close()
+
+    return context_counts
 # okay decompiling info_theory_helper.cpython-36.pyc

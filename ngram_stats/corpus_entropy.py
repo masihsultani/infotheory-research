@@ -1,5 +1,5 @@
 import numpy as np
-from helper import *
+from tools.helper import *
 
 
 def compute_entropy(unigrams, token_count):

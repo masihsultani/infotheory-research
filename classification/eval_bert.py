@@ -1,7 +1,7 @@
 import tensorflow as tf
 import torch
 
-
+import sys
 from collections import defaultdict
 
 import pandas as pd
@@ -9,6 +9,8 @@ import pandas as pd
 import numpy as np
 
 from transformers import BertForMaskedLM, BertTokenizer
+import warnings
+warnings.filterwarnings('ignore')
 
 
 # specify GPU device
@@ -28,29 +30,33 @@ sense_dict = {'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 
               'examination': 18, 'television': 5, 'photograph': 2, 'memorandum': 22, 'bicycle': 4,
               'pornography': 1, 'fraternity': 21, 'limousine': 8, 'referee': 15, 'saxophone': 20,
               'carbohydrate': 6, 'chemotherapy': 19, 'hippopotamus': 13, 'cockroach': 16,
-              'kilogram': 10, 'rhinoceros': 11, 'dormitory': 9, 'chimpanzee': 14}
+              'kilogram': 10, 'rhinoceros': 11, 'dormitory': 9, 'chimpanzee': 14,'lab':23,'laboratory':23,'info':24,
+              'information':24}
 sense_dict2 = {'all': 0, 'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 'math': 7, 'limo': 8,
                'ref': 15, 'roach': 16, 'fridge': 17, 'exam': 18, 'chemo': 19, 'sax': 20, 'frat': 21, 'memo': 22,
-               'dorm': 9, 'kilo': 10, 'rhino': 11, 'undergrad': 12, 'hippo': 13, 'chimp': 14}
+               'dorm': 9, 'kilo': 10, 'rhino': 11, 'undergrad': 12, 'hippo': 13, 'chimp': 14, 'lab':23, 'info':24}
 inv_map = {v: k for k, v in sense_dict2.items()}
 
-def load_data(filein, count):
-    df = pd.read_csv(filein)
+def load_data(df):
+
     df["length"] = df["sentence"].apply(lambda x: len(x.split()))
     df = df[df["length"]<500]
-
+    
     short = df[(df.word1.isnull()==False) & (df.word2.isnull())]
     long = df[(df.word1.isnull()) & (df.word2.isnull()==False)]
+    try:
+        count = min(len(short),len(long))
+    except ValueError:
+        return [], []
+    if count > 1000:
+        count = 1000
+    long = long.sample(count)
+    short = short.sample(count)
     short["sentence"] = short["sentence"].apply(lambda x: x.replace("<s>", "[MASK]"))
     long["sentence"] = long["sentence"].apply(lambda x: x.replace("<l>", "[MASK]"))
     short["label"] = short["word1"]
     long["label"] = long["word2"]
-
-    short = short.groupby('word1', group_keys=False).apply(pd.DataFrame.sample, n=count)
-
-    long = long.groupby('word2', group_keys=False).apply(pd.DataFrame.sample, n=count)
     df = pd.concat([short, long], ignore_index=True)
-
 
     sentences = df["sentence"].values
     labels = df["label"].values
@@ -123,12 +129,34 @@ def bert_predict(bert_model, tokenizer, tokens, label):
 
 
 def compute_acc(token_list, labels, model, tokenizer):
-    word_scores = defaultdict(int)
+    word_scores =0
     for i in range(len(token_list)):
         probs = bert_predict(model, tokenizer, token_list[i], labels[i])
         if np.argmax(probs) == 0:
-            word_scores[inv_map[sense_dict[labels[i]]]] += 1
-    return word_scores
+            word_scores += 1
+    return word_scores/len(labels)
+
+def compute_scores(df, model, tokenizer):
+    """
+
+    :param df: Dataframe
+    :param model: Classifier
+    :return:
+    """
+    bert_scores = []
+
+    for i in range(1,25):
+
+        df1 = df[df["sense"] == i]
+        sentences, labels = load_data(df1)
+        token_list = build_tokens(tokenizer, sentences)
+        scores = compute_acc(token_list, labels, model, tokenizer)
+
+
+        bert_scores.append(scores)
+        print(i)
+        sys.stdout.flush()
+    return bert_scores
 
 
 if __name__ == "__main__":
@@ -136,18 +164,18 @@ if __name__ == "__main__":
     bert_model = BertForMaskedLM.from_pretrained('bert-base-uncased')
     bert_model.cuda()
     bert_model.eval()
-    count =100
-    corpora = ["native","nonnative","wiki"]
-    corpus_results =[]
+    corpora = ["native","wiki"]
+    all_lr_scores = {}
     for corpus in corpora:
+        print(corpus)
+        sys.stdout.flush()
         file_in = f"/hal9000/masih/sentences/{corpus}_sentences_False.csv"
-        sentences, labels = load_data(file_in, count)
-        token_list = build_tokens(tokenizer, sentences)
-        scores = compute_acc(token_list, labels, bert_model, tokenizer)
-        corpus_results.append(scores)
+        df = pd.read_csv(file_in)
+        s = compute_scores(df, bert_model, tokenizer)
 
-    results_df = pd.concat([pd.DataFrame.from_dict(corpus_results[i],orient='index', columns=[corpora[i]])
-                            for i in range(len(corpus_results))], axis=1)
-    results_df = results_df/(2*count)
-    results_df.to_csv("bert_results.csv", index=True, encoding='utf-8')
+        all_lr_scores[f"{corpus}_bert"] = s
+
+    bert_results = pd.DataFrame(data=all_lr_scores)
+    bert_results["sense"] = bert_results.index.to_series().apply(lambda x: inv_map[x+1])
+    bert_results.to_csv("bert_results.csv", index=None)
 

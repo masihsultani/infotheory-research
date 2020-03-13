@@ -3,9 +3,13 @@ import pandas as pd
 import sys
 import re
 from string import punctuation
-from helper import WORD_SENSE_DICT
+from tools.helper import WORD_SENSE_DICT
 regex = re.compile('[%s]' % re.escape(punctuation))
 
+"""
+
+Script to extract sentences and label them for long/short form of a word
+"""
 
 def main_prog(infile, out_file,csv_file, stop_words=False):
     """
@@ -20,11 +24,11 @@ def main_prog(infile, out_file,csv_file, stop_words=False):
     :return: None
     """
 
-    df = pd.read_csv("all_forms.csv", encoding="utf-8")  # load csv with long and short form words
+    df = pd.read_csv("all_forms2.csv", encoding="utf-8")  # load csv with long and short form words
     short_forms = set(list(df.short.values))
     long_forms = set(list(df.long.values))
 
-    with open(out_file, "w") as out_file:
+    with open(out_file, "a") as out_file:
         with open(infile, "r") as file:
             csvout = csv.writer(out_file)
             if csv_file:

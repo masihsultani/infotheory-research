@@ -1,0 +1,92 @@
+Comparing all words: 
+Long form top 20: ['government', 'party', 'child', 'system', 'each', 'world', 'under', 'the first', 'to make', 'state', 'found', 'fat', 'never', 'see', 'very', 'there is', 'real', 'from the', 'there are', 'years'] 
+Short from top 20: ['went', 'want to', 'ago', 'end', 'lot of', 'house', 'make', 'hard', 'though', 'will be', 'have to', 'anything', 'low', 'first', 'getting', 'long', 'still', 'high', 'always', 'room'] 
+
+Sense = porn 
+Long form top 20: ['hardcore', 'child', 'speech', 'possession of', 'crime', 'against', 'society', 'possession', 'illegal', 'sexual', 'content', 'viewing', 'violence', 'including', 'production', 'legal', 'between', 'media', 'should be', 'children'] 
+Short from top 20: ['star', 'watching', 'watch', 'guys', 'sites', 'site', 'gay', 'unfortunately', 'guy', 'of it', 'gore', 'weird', 'trying to', 'straight', 'videos', 'removed', 'kind of', 'off', 'need', 'hes'] 
+
+Sense = photo 
+Long form top 20: ['painting', 'film', 'submission', 'public', 'photography', 'life', 'at least', 'information', 'removed', 'photographer', 'been removed', 'such', 'background', 'things', 'own', 'have the', 'gt', 'by', 'white', 'its not'] 
+Short from top 20: ['your submission', 'stock', 'the big', 'op', 'id', 'text', 'next', 'post', 'photos', 'in that', 'to get', 'the and', 'edit', 'video', 'last', 'guy', 'need', 'got', 'the original', 'unfortunately'] 
+
+Sense = phone 
+Long form top 20: ['pole', 'poles', 'invented', 'game of', 'bell', 'lines', 'interview', 'system', 'services', 'line', 'communications', 'online', 'service', 'by', 'under', 'cable', 'radio', 'support', 'office', 'game'] 
+Short from top 20: ['android', 'cell', 'battery', 'windows', 'iphone', 'app', 'screen', 'apps', 'on my', 'buy', 'my', 'mobile', 'guy', 'getting', 'making', 'google', 'shit', 'watch', 'up the', 'best'] 
+
+Sense = bike 
+Long form top 20: ['kick', 'vehicle', 'helmets', 'man', 'motorcycle', 'the road', 'transport', 'person', 'gt', 'local', 'the new', 'helmet', 'cars', 'these', 'wheels', 'wheel', 'you could', 'by', 'made', 'car'] 
+Short from top 20: ['mountain', 'httpswwwredditcomrmotorcycleswikiruleswikisuperthreadsandcommonthreads', 'httpswwwredditcomrmotorcycleswikiruleswikisuperthreadsandcommonthreads if', 'bikes', 'lanes', 'looks like', 'almost', 'looks', 'shop', 'nice', 'show', 'road', 'lane', 'looking', 'less', 'by the', 'new', 'lock', 'go', 'girl'] 
+
+Sense = tv 
+Long form top 20: ['httpswwwredditcomrchromecastcomments22ftdcvideototvaudiotophone', 'but play', 'on national', 'public', 'cast from', 'network', 'to but', 'broadcast', 'history', 'film', 'least', 'cast video', 'there any', '288', 'the best', 'radio', 'national', 'world', '267', 'ever'] 
+Short from top 20: ['to cast', 'chromecast', 'video on', 'pc', 'reality', 'at least', 'stuff', 'shows', 'keep', 'days', 'want', 'saw', 'money', 'remember', 'watch', 'you can', 'use', 'using', 'movie', 'show'] 
+
+Sense = carb 
+Long form top 20: ['dietary', 'carbohydrates', 'risk', 'every', 'simple', 'studies', 'fat diet', 'ketogenic', 'metabolism', 'essential', 'individuals', 'weight loss', 'fibre', 'levels', 'grains', 'source', 'fat low', 'change', 'brain', 'effects'] 
+Short from top 20: ['low', 'getting', 'lose', 'ketogenic diet', 'days', 'reduce', 'having', 'carbs', 'am', 'did', 'low and', 'bit', 'heavy', 'going to', 'work', 'problem', 'youre', 'as well', 'so', 'here'] 
+
+Sense = math 
+Long form top 20: ['the of', 'philosophy', 'maths', 'university', 'mathematical', 'advanced', 'study', 'applied', 'kind', 'field', 'at least', 'pure', 'universe', 'sciences', 'in and', 'degree', 'computer science', 'knowledge', 'however', 'language'] 
+Short from top 20: ['do the', 'did the', 'kind of', 'class', 'and science', 'bad', 'teacher', 'classes', 'least', 'the and', 'easy', 'done', '10', 'kids', 'lot of', 'wrong', 'average', 'good at', 'cs', 'to make'] 
+
+Sense = limo 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = dorm 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = kilo 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = rhino 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = undergrad 
+Long form top 20: ['postgraduate', 'studies', 'my degree', 'degrees', 'grad school', 'career', 'education', 'universities', 'study', 'best', 'such', 'level', 'thesis', 'tuition', 'an degree', 'the us', 'degree', 'and graduate', 'programs', 'students'] 
+Short from top 20: ['grad', 'in and', 'the best', 'trying', 'years of', 'my and', 'at my', 'cs', 'took', 'went to', 'during', 'go to', 'get into', 'and it', 'got', 'friends', 'likely', 'dont know', 'way', 'after'] 
+
+Sense = hippo 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = chimp 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = ref 
+Long form top 20: ['referees', 'kickoff', 'lineups', 'icondown', 'iconnotesbig', 'iconyellow', 'park', 'gmt', 'rules', 'stadium', 'position', 'official', 'world', 'venue', 'match', 'sent', 'iconnotesbig lineups', 'decisions', 'trying to', 'kick'] 
+Short from top 20: ['indy', 'eu', 'refs', 'goes', 'fuck', 'trying', 'the eu', 'around', 'one of', 'the other', 'everyone', 'during the', 'called', '10', 'calling', 'the field', 'has been', 'own', 'the rules', 'going'] 
+
+Sense = roach 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = fridge 
+Long form top 20: ['car', 'box', 'store', 'air', 'and then', 'bread', 'you dont', 'overnight', 'use', 'top', 'the first', 'inside', 'the next', 'around', 'fresh', 'gt', 'night', 'gas', 'least', 'house'] 
+Short from top 20: ['theres', 'anything', 'the to', 'the is', 'long', 'always', 'again', 'bottle of', 'milk', 'did', 'in my', 'nothing', 'to get', 'usually', 'you could', 'why', 'bag', 'and it', 'eating', 'behind'] 
+
+Sense = exam 
+Long form top 20: ['cross', 'an of', 'cursory', 'closer', 'critical', 'thorough', 'further', 'evidence', 'upon', 'medical', 'shows', 'under', 'must', 'close', 'public', 'found', 'whether', 'without', 'of', 'case'] 
+Short from top 20: ['studying', 'paper', 'tomorrow', 'exams', 'the and', 'week', 'material', 'final', 'questions', 'bar', 'out of', 'take the', 'everyone', 'university', 'taking', 'student', 'school', 'study', 'class', 'going to'] 
+
+Sense = chemo 
+Long form top 20: ['is not', 'gt', 'basically', 'undergoing', 'radiotherapy', 'this is', 'cell', 'health', 'effects of', 'women', 'children', 'drug', 'that the', 'come', 'the same', 'around', 'often', 'woman', 'need', 'new'] 
+Short from top 20: ['always', 'shes', 'try', 'anything', 'in my', 'and you', 'and then', 'doing', 'radiation and', 'lymphoma', 'dont have', 'that it', 'to make', 'fight', 'pain', 'full', 'to help', 'week', 'problem', 'saying'] 
+
+Sense = sax 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = frat 
+Long form top 20: ['equality', 'liberty', 'member of', 'pledge', 'fraternities', 'between', 'men', 'members', 'that you', 'national', 'another', 'why', 'chapter', 'brothers', 'greek', 'in college', 'different', 'sort', 'our', 'trying to'] 
+Short from top 20: ['boy', 'boys', 'bros', 'bro', 'party', 'parties', 'guys', 'kids', 'the only', 'trying', 'houses', 'house', 'guy', 'game', 'stuff', 'im not', 'at party', 'the other', 'bunch', 'and they'] 
+
+Sense = memo 
+Long form top 20: ['budapest', 'agreement', 'understanding', 'of understanding', 'military', 'ukraine', 'states', 'war', 'nato', 'treaty', 'nuclear', 'the budapest', 'signed', 'was not', 'both', 'issued', 'sovereignty', 'act', 'russia', 'year'] 
+Short from top 20: ['leaked', 'release', 'google', 'got the', 'missed', 'trump', 'right', 'must', 'the that', 'get the', 'nunes', 'sending', 'didnt get', 'read', 'clinton', 'internal', 'released', 'company', 'thing', 'women'] 
+

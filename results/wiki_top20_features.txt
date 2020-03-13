@@ -1,0 +1,92 @@
+Comparing all words: 
+Long form top 20: ['es', 'child', 'body', 'species', 'between', 'very', 'women', 'although', 'animals', 'degree', 'the and', 'by the', 'per', 'education', 'found', 'various', 'could', 'out of', 'may', 'three'] 
+Short from top 20: ['augustine', 'augustine of', 'released', 'california', 'class', 'nt', 'featured', '2005', 'version', 'party', 'video', 'however', 'based', 'main', 'records', 'did', 'board', 'times', 'show', 'part'] 
+
+Sense = porn 
+Long form top 20: ['child', 'possession', 'law', 'feminists', 'legal', 'government', 'obscenity', 'illegal', 'prostitution', 'against', 'well as', 'court', 'charges', 'online', 'national', 'laws', 'children', 'possession of', 'rights', 'hardcore'] 
+Short from top 20: ['star', 'stars', 'soft', 'movie', 'actress', '2009', 'included', 'actors', '2010', 'site', 'movies', 'now', 'director', 'scene', '2011', 'of children', 'films', 'magazines', 'down', 'former'] 
+
+Sense = photo 
+Long form top 20: ['based on', 'painting', 'famous', 'collection', 'taken', 'portrait', 'war', 'could', 'new york', 'single', 'published', 'the world', 'man', 'known', 'showed', 'front', 'appeared', 'what', 'of an', 'august'] 
+Short from top 20: ['shoots', 'shoot', 'photos', 'gallery', 'see', 'studio', 'file', 'international', 'pictures', '2010', 'company', 'news', 'include', '2011', 'press', 'released', '2008', 'girls', 'second', 'links'] 
+
+Sense = phone 
+Long form top 20: ['telegraph', 'exchange', 'bell', 'cable', 'general', 'post', 'company', 'operator', 'communication', 'telecommunications', 'building', 'emergency', 'line', 'equipment', 'service', 'connected', 'systems', 'network', 'early', 'system'] 
+Short from top 20: ['cell', 'windows', 'mobile', 'features', 'news', 'released', 'game', 'call from', 'text', '2011', 'the company', 'calls', 'the and', 'users', 'phones', 'software', 'available', 'user', 'call', 'nt'] 
+
+Sense = bike 
+Long form top 20: ['road racer', 'road race', 'road racing', 'association', 'pedestrian', 'professional road', 'company', 'bicycles', 'professional', 'french', 'for uci', 'wheel', 'uci', 'september', 'de', 'foot', 'safety', 'held', 'international', 'motocross'] 
+Short from top 20: ['mountain', 'honda', 'sport', 'championship', 'bikes', 'engine', 'ride', 'trails', 'lanes', 'paths', 'run', 'off', '2012', 'season', 'rides', 'rider', 'show', 'any', 'year', 'path'] 
+
+Sense = tv 
+Long form top 20: ['film and', 'canadian', 'the united', 'science', 'british', 'radio and', 'an american', 'cbs', 'american', 'external links', 'is an', 'nbc', 'public', 'history', 'network', 'career', 'roles', 'episode of', 'season of', 'theatre'] 
+Short from top 20: ['guide', 'external', 'movie', 'magazine', 'currently', 'like', '2012', 'version', 'channels', 'started', 'top', 'uk', 'band', 'called', '2011', 'released', 'will', 'movies', 'song', 'he is'] 
+
+Sense = carb 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = math 
+Long form top 20: ['classroom for', 'of at', 'theorem', 'community colleges', 'mathematician', 'astronomy', 'theory', 'studied', 'natural', 'applied', 'philosophy', 'professor of', 'space', 'the pennsylvania', 'ranking', 'logic', 'achieved', 'institute', 'future state', 'function'] 
+Short from top 20: ['band', 'for teacher', 'pennsylvania public', 'sat', 'scored', 'located', 'reading or', 'social studies', 'club', 'day', 'of student', 'of extra', 'improve their', 'scores', 'laptop', 'or english', 'and science', '8th', 'reading', 'level and'] 
+
+Sense = limo 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = dorm 
+Long form top 20: ['town', 'centre', 'up to', 'church', 'chapel', 'gymnasium', 'street', 'classrooms', 'village', 'large', 'the village', 'hall the', 'hall is', 'designed', 'the building', 'story', 'library', 'become', 'private', 'well'] 
+Short from top 20: ['dorms', 'dining hall', 'fall', 'the room', 'life', 'rooms', 'room', 'freshman', 'her room', 'his room', 'back', 'in their', 'him', 'named after', 'number', 'include', 'residents', 'up', 'any', 'which was'] 
+
+Sense = kilo 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = rhino 
+Long form top 20: ['party', 'es', 'beetle', 'bones', 'genus', 'indian', 'onehorned', 'version of', 'large', 'region', 'form', 'giant', 'horns', 'common', 'elephant', 'living', 'home to', 'sea', 'band', 'the world'] 
+Short from top 20: ['spiderman', 'match', 'entertainment', 'records', 'defeated', 'tna', 'release', 'reissue', 'warner', '2001', 'released', 'cd', 'box', 'bonus', 'part of', 'rhinos', 'series', 'team 3d', 'reissued', 'compilation'] 
+
+Sense = undergrad 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = hippo 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = chimp 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = ref 
+Long form top 20: ['football', 'assistant', 'cup', 'match', 'rugby', 'wrestling', 'fifa', 'professional', 'penalty', 'referees', 'served', 'bout', 'officials', 'special guest', 'former', 'matches', 'championship', 'players', 'ring', 'awarded'] 
+Short from top 20: ['invid', 'name', 'grid', 'earth', 'marriage', 'os', 'page', 'robotech', 'record', 'now', 'references', 'forces', 'university', 'see', 'technology', 'reference', 'the haydonites', 'haydonites', 'while the', '2010'] 
+
+Sense = roach 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = fridge 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = exam 
+Long form top 20: ['an of', 'the of', 'imperial', 'shall', 'for at', 'further', 'in his', 'examinations', 'made', 'council', 'among', 'upon', 'book', 'after passing', 'under', 'certificate', 'senior', 'the united', 'found', 'the same'] 
+Short from top 20: ['exams', 'keystone', 'questions', 'scores', 'ap', 'graduation', 'score', 'count', 'passing', 'final', 'take', 'count for', 'results', 'onethird', 'failed', 'certified', 'onethird of', 'hours', 'end of', 'course grade'] 
+
+Sense = chemo 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = sax 
+Long form top 20: ['saxophones', 'double bass', 'bass guitar', 'works', 'of music', 'playing the', 'it was', 'classical', 'the tenor', 'addition', 'percussion and', 'on keyboards', 'use', 'references', 'father', 'often', 'organ', 'quartet', 'black', 'bassoon'] 
+Short from top 20: ['rohmer', 'film', 'original', 'tour', 'about', 'man', 'don', 'called', 'although', 'on alto', 'so', 'george', 'mike', 'english', 'until', 'second', 'through', 'along', 'larry', 'part of'] 
+
+Sense = frat 
+Long form top 20: [] 
+Short from top 20: [] 
+
+Sense = memo 
+Long form top 20: ['of understanding', 'of agreement', 'the of', 'signed', 'association', 'submitted', 'understanding with', 'signing', 'india', 'agreement', 'issued', 'education', 'mou', 'established', 'presented', 'named', 'government', 'well as', 'united', 'document'] 
+Short from top 20: ['leaked', 'bush', 'iraq', 'talking', 'release', 'such as', 'american', 'of evidence', 'signed by', 'stating', 'called', 'head', 'described', 'media', 'talking points', '2002', 'torture', 'united states', 'ministry', 'can'] 
+

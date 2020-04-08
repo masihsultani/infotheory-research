@@ -1,14 +1,11 @@
-# uncompyle6 version 3.4.0
-# Python bytecode 3.6 (3379)
-# Decompiled from: Python 3.6.7 (default, Oct 22 2018, 11:32:17) 
-# [GCC 8.2.0]
-# Embedded file name: /h/118/masih/surpisal/info_theory_helper.py
-# Compiled at: 2019-09-13 12:12:10
-# Size of source mod 2**32: 4894 bytes
 import csv
 from collections import defaultdict
 from ast import literal_eval
 import sys
+
+"""
+Helper functions
+"""
 
 gram_conv = {"trigram": "bigram", "bigram": "unigram"}
 
@@ -23,13 +20,19 @@ WORD_SENSE_DICT = {'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb'
                    'info': 24, 'information': 24}
 
 
-def get_context(words, gram, corpus, stop_words):
+def get_context(words, gram, corpus,keep_word, stop_words):
     """
     Helper function to get contexts for a set of words
+    :param keep_word: bool
+        when returning contexts, keep original word?
     :param gram: str
+        ngram length (bigram/trigram)
     :param stop_words: str
+        remove stop_words or not
     :param corpus: str
+        name of the corpus
     :param words: set
+        set of words to find contexts for
     :return: set
     """
     contexts = set()
@@ -43,7 +46,7 @@ def get_context(words, gram, corpus, stop_words):
             for row in csvfile:
                 templst = row[0].lower().split(' ')
                 if templst[(-1)] in words:
-                    if keep_words:
+                    if keep_word:
                         contexts.add(row[0].lower())
                     else:
                         contexts.add(' '.join(word for word in templst[:-1]))

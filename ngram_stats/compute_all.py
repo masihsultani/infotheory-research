@@ -6,6 +6,9 @@ from tools.helper import get_gram_count, WORD_SENSE_DICT
 import pandas as pd
 import numpy as np
 
+"""
+Script to compute suprisal and next-word entropy of bigrams/trigrams
+"""
 
 def main(argv):
     corpus = argv[1]  # native or nonnative or google or wiki

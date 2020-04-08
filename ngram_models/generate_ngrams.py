@@ -1,11 +1,11 @@
-import csv
-import re
-from string import punctuation
-import csv
-from collections import defaultdict, Counter
-import sys
-import pandas as pd
 import json
+import re
+import sys
+from collections import Counter
+from string import punctuation
+
+import pandas as pd
+
 regex = re.compile('[%s]' % re.escape(punctuation))
 
 """
@@ -119,7 +119,7 @@ def clean_string(string, stop_words):
 
 
 if __name__ == "__main__":
-    data = sys.argv[1]
+    corpus = sys.argv[1]
     #stop = sys.argv[2]
     stops = ['yes', 'no']
     words = pd.read_csv("function_words_127.txt", delimiter=' ', header=None)
@@ -134,27 +134,27 @@ if __name__ == "__main__":
 
             dic2 = {'yes': True, 'no': False}
 
-            if data=="native":
+            if corpus== "native":
                 filein = "/ais/hal9000/ella/reddit_2018/reddit.n.sent.all.shuf.csv"
-                main_prog(filein, data, gram_size=gram, stop_word=dic2[stop])
-            elif data=="nonnative":
+                main_prog(filein, corpus, gram_size=gram, stop_word=dic2[stop])
+            elif corpus== "nonnative":
                 filein= "/ais/hal9000/ella/reddit_2018/reddit.nn.sent.all.shuf.csv"
-                main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop])
-            elif data=="learners":
+                main_prog(filein, corpus, gram_size=sys.argv[2], stop_word=dic2[stop])
+            elif corpus== "learners":
                 filein = "/ais/hal9000/ella/learners_data/learners.txt"
-                main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
-            elif data=="wiki":
+                main_prog(filein, corpus, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
+            elif corpus== "wiki":
                 filein = "/ais/hal9000/ella/wikipedia/eng/wikipedia.txt"
-                main_prog(filein, data, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
-            elif data == "US":
-                filein = f"/ais/hal9000/ella/reddit_2018/reddit_raw_data/reddit.{data}.raw.out"
-                main_prog(filein,data,sys.argv[2],stop_word=dic2[stop],csv_file=False)
-            elif data == "UK":
+                main_prog(filein, corpus, gram_size=sys.argv[2], stop_word=dic2[stop], csv_file=False)
+            elif corpus == "US":
+                filein = f"/ais/hal9000/ella/reddit_2018/reddit_raw_data/reddit.{corpus}.raw.out"
+                main_prog(filein, corpus, sys.argv[2], stop_word=dic2[stop], csv_file=False)
+            elif corpus == "UK":
                 filein = [f"/ais/hal9000/masih/surprisal/UK/unitedkingdom.comment.json.out", f"/ais/hal9000/masih/surprisal/UK/casualuk.comment.json.out"]
-                main_prog(filein, data, sys.argv[2], stop_word=dic2[stop], csv_file=False)
-            elif data == "europe":
+                main_prog(filein, corpus, sys.argv[2], stop_word=dic2[stop], csv_file=False)
+            elif corpus == "europe":
                 filein = [f"/ais/hal9000/masih/surprisal/UK/europe.comment.json.out", f"/ais/hal9000/masih/surprisal/UK/askeurope.comment.json.out"]
-                main_prog(filein, data, gram, stop_word=dic2[stop], csv_file=False)
+                main_prog(filein, corpus, gram, stop_word=dic2[stop], csv_file=False)
             else:
                 sys.exit()
 

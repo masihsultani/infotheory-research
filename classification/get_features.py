@@ -4,6 +4,10 @@ from sklearn.linear_model import LogisticRegression
 
 import pandas as pd
 
+"""
+Script to return the top features used in logistic regression for classification task
+"""
+
 sense_dict = {'porn': 1, 'photo': 2, 'phone': 3, 'bike': 4, 'tv': 5, 'carb': 6, 'math': 7, 'limo': 8,
               'ref': 15, 'roach': 16, 'fridge': 17, 'exam': 18, 'chemo': 19, 'sax': 20, 'frat': 21, 'memo': 22,
               'dorm': 9, 'kilo': 10, 'rhino': 11, 'undergrad': 12, 'hippo': 13, 'chimp': 14}
@@ -40,18 +44,7 @@ def train_all(df, model):
 
 
 def train_model(df, model):
-    """
-    A function that converts text data into M x N matrix where M
-    is number of headlines, and N is feature space dimension(vocabulary)
 
-    Returns 2d list containing training(70%), validation(15%) and test(15&) data
-    load_data[0] is location of X values (train,val,test)
-    load_data[1] is location of Y values (train,val,test)
-    real_file: str
-        location of real headline file
-    fake_file: str
-        location of fake headline file
-    """
     short = df[(df.word1.isnull() == False) & (df.word2.isnull())]
     long = df[(df.word1.isnull()) & (df.word2.isnull() == False)]
     try:

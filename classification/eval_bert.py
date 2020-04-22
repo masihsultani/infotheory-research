@@ -12,6 +12,12 @@ from transformers import BertForMaskedLM, BertTokenizer
 import warnings
 warnings.filterwarnings('ignore')
 
+"""
+A very simple script that evaluates the bert classification model to predict whether a short form or long form
+of a word would be used. Script is messy, lots of needs to be done.
+
+"""
+
 
 # specify GPU device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

@@ -2,6 +2,10 @@ import pandas as pd
 from tools.helper import *
 from collections import defaultdict
 import sys
+
+"""
+Script to compute frequency count of context and whole phrase
+"""
 def main():
     corpora = [ "native","wiki", "google"]
     grams = ["bigram", "trigram"]

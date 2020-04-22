@@ -16,11 +16,11 @@ A script to generate ngrams from native or non native reddit corpus
 def main_prog(infile, corpus, gram_size, stop_word, csv_file=True):
     """
 
-    :param infile: s
+    :param infile: str
         The location of corpus
-    :param corpus: s
+    :param corpus: str
         string native or nonnative for saving final file
-    :param gram_size: s
+    :param gram_size: str
         bigram or trigram to count bigram or trigram count for corpus
     :param csv_file: boolean
         If true, corpus is a csv file
